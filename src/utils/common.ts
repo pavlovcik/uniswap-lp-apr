@@ -1,3 +1,5 @@
+import { state } from "../calculateAPR";
+
 export function setupDomNode() {
 	const node = document.createElement("div");
 	node.style.cssText = `

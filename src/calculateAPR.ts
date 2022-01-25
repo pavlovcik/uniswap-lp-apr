@@ -1,7 +1,7 @@
 import { attachMutationObserver } from "./utils";
 import { getPositionIdFromUrl, readLocalStorage, setupDomNode, updateDomNode, writeLocalStorage } from "./utils/common";
 
-const state = {
+export const state = {
 	liquidity: undefined,
 	fees: undefined,
 	percentYield: undefined,
@@ -30,7 +30,7 @@ if (state.storage[POSITION_ID]) {
 	state.storage[POSITION_ID] = depositTime = prompt("Paste the deposit time here");
 }
 
-const MS_IN_YEAR = 31536000000;
+export const MS_IN_YEAR = 31536000000;
 const NOW = new Date();
 const DEPOSIT_TIME_LOCAL = new Date(depositTime);
 
