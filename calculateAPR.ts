@@ -1,3 +1,6 @@
+import { attachMutationObserver } from "./utils";
+import { getPositionIdFromUrl, readLocalStorage, setupDomNode, updateDomNode, writeLocalStorage } from "./utils/common";
+
 const state = {
 	liquidity: undefined,
 	fees: undefined,
@@ -51,84 +54,3 @@ if (newDepositTime) {
 }
 
 attachMutationObserver();
-
-function setupDomNode() {
-	const node = document.createElement("div");
-	node.style.cssText = `
-position: fixed;
-top: 0;
-z-index: 2;
-padding: 8px;
-background: rgb(33, 36, 41);
-border-radius: 16px;
-margin: 16px;
-border: 2px solid rgb(25, 27, 31);
-font-weight: 500;
-`;
-	document.body.append(node);
-	return node;
-}
-
-function readLocalStorage() {
-	try {
-		const apr = localStorage.getItem("APR");
-		if (apr) {
-			return JSON.parse(apr);
-		} else {
-			throw new Error("No APR found");
-		}
-	} catch (e) {
-		return initializeLocalStorage();
-	}
-}
-
-function initializeLocalStorage() {
-	localStorage.setItem("APR", "{}");
-	return {};
-}
-
-function getPositionIdFromUrl() {
-	const lastNumbersInUrl = window.location.href.match(/\d+$/gim);
-	if (!lastNumbersInUrl) {
-		throw new Error("No position id found in url");
-	}
-	return lastNumbersInUrl[0];
-}
-
-function writeLocalStorage() {
-	localStorage.setItem("APR", JSON.stringify(state.storage));
-}
-
-function attachMutationObserver() {
-	const observer = new MutationObserver(function (mutations) {
-		mutations.forEach(function (mutation) {
-			if (mutation.type === "childList") {
-				console.log("dom mutation detected");
-				const newCaptured = document.body.innerText.match(/^\$[0-9]{1,9}([,.][0-9]{1,9})/gim);
-				if (!newCaptured) {
-					throw new Error("No new captured found");
-				}
-				state.fees = parseFloat(newCaptured[1].replace(",", "").slice(1));
-				state.percentYield = state.fees / state.liquidity;
-				state.timeElapsed = new Date().getTime() - state.depositTime.getTime();
-				state.projectedAPR = state.percentYield / (state.timeElapsed / MS_IN_YEAR);
-				console.log(state.projectedAPR);
-				console.log(state);
-				updateDomNode(
-					`${state.projectedAPR} · APR\n$${((state.projectedAPR / 365) * state.liquidity).toFixed(2)} · Daily\n$${(
-						state.projectedAPR * state.liquidity
-					).toFixed(2)} · Annual`
-				);
-			}
-		});
-	});
-
-	observer.observe(document.getElementById("root") as HTMLElement, {
-		childList: true,
-		subtree: true,
-	});
-}
-
-function updateDomNode(string: string) {
-	state.domNode.innerText = string;
-}
