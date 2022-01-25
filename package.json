@@ -10,12 +10,15 @@
         "postbuild": "cat dist/closured.js | pbcopy && echo 'Copied to clipboard'",
         "compile": "parcel build src/index.ts --dist-dir dist",
         "optimize": "google-closure-compiler dist/index.js --js_output_file dist/closured.js",
-        "prepend": "ts-node scripts/append-javascript.ts dist/closured.js"
+        "prepend": "ts-node scripts/append-javascript.ts dist/closured.js",
+        "watch": "yarn nodemon --ignore dist --exec 'yarn build'"
     },
     "dependencies": {
         "google-closure-compiler": "^20220104.0.0",
+        "nodemon": "^2.0.15",
         "npm-run-all": "^4.1.5",
         "parcel": "^2.2.1",
+        "ts-node": "^10.4.0",
         "typescript": "^4.5.5"
     }
 }
