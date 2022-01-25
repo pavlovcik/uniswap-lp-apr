@@ -7,6 +7,7 @@
     "scripts": {
         "prebuild": "rimraf dist",
         "build": "run-s compile optimize prepend",
+        "postbuild": "cat dist/closured.js | pbcopy && echo 'Copied to clipboard'",
         "compile": "parcel build src/index.ts --dist-dir dist",
         "optimize": "google-closure-compiler dist/index.js --js_output_file dist/closured.js",
         "prepend": "ts-node scripts/append-javascript.ts dist/closured.js"

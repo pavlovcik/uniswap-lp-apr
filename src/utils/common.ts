@@ -33,7 +33,7 @@ export function initializeLocalStorage() {
 	return {};
 }
 export function getPositionIdFromUrl() {
-	const lastNumbersInUrl = window.location.href.match(/\d+$/gim);
+	const lastNumbersInUrl = window.location.href.match(/\d+/gim);
 	if (!lastNumbersInUrl) {
 		throw new Error("No position id found in url");
 	}
