@@ -1,0 +1,10 @@
+{
+  "name": "uniswap-lp-bookmarklet",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "アレクサンダー.eth <gpg@pavlovcik.com>",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.5.5"
+  }
+}
