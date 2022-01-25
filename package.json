@@ -5,29 +5,16 @@
     "author": "アレクサンダー.eth <gpg@pavlovcik.com>",
     "license": "MIT",
     "scripts": {
-        "build": "run-s p closure prepend",
-        "p": "parcel build src/index.ts",
-        "closure": "google-closure-compiler index.js --js_output_file closured.js",
-        "_build": "npm run build:js && npm run build:bookmarklet",
-        "_build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --minified --no-comments",
+        "build": "run-s compile optimize prepend",
+        "compile": "parcel build src/index.ts",
+        "optimize": "google-closure-compiler index.js --js_output_file closured.js",
         "prepend": "ts-node scripts/append-javascript.ts closured.js"
     },
     "dependencies": {
         "google-closure-compiler": "^20220104.0.0",
         "npm-run-all": "^4.1.5",
         "parcel": "^2.2.1",
-        "ts-node": "^10.4.0",
-        "typescript": "^4.5.5",
-        "web3": "^1.7.0"
+        "typescript": "^4.5.5"
     },
-    "devDependencies": {
-        "@babel/cli": "^7.16.8",
-        "@babel/core": "^7.16.12",
-        "@babel/plugin-proposal-class-properties": "^7.16.7",
-        "@babel/plugin-proposal-object-rest-spread": "^7.16.7",
-        "@babel/preset-env": "^7.16.11",
-        "@babel/preset-typescript": "^7.16.7",
-        "@types/web3": "^1.2.2",
-        "babel-cli": "^6.26.0"
-    }
+    "devDependencies": {}
 }
