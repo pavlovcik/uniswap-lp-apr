@@ -1,4 +1,4 @@
-import { MS_IN_YEAR, state } from "../calculateAPR";
+import { MS_IN_YEAR, state } from "../calculate-apr";
 import { updateDomNode } from "./common";
 
 export function attachMutationObserver() {

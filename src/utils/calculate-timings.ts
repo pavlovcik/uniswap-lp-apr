@@ -1,4 +1,4 @@
-import { state, POSITION_ID, MS_IN_YEAR } from "../calculateAPR";
+import { state, POSITION_ID, MS_IN_YEAR } from "../calculate-apr";
 import { Timestamp } from "../callback";
 
 export function calculateTimings(timestamp: unknown) {

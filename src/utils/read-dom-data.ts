@@ -1,4 +1,4 @@
-import { state } from "../calculateAPR";
+import { state } from "../calculate-apr";
 
 export function readDomData() {
     const CAPTURED = document.body.innerText.match(/^\$[0-9]{1,9}([,.][0-9]{1,9})/gim);
