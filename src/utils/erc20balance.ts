@@ -1,4 +1,3 @@
-//
 import { abi } from "./abi";
 import { loadContract } from "./load";
 const promisify = (inner) =>
