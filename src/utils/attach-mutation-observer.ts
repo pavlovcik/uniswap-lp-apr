@@ -10,6 +10,7 @@ export function attachMutationObserver() {
 				if (!newCaptured) {
 					throw new Error("No new captured found");
 				}
+				state.liquidity = parseFloat(newCaptured[0].replace(",", "").slice(1));
 				state.fees = parseFloat(newCaptured[1].replace(",", "").slice(1));
 				state.percentYield = state.fees / state.liquidity;
 				state.timeElapsed = new Date().getTime() - state.depositTime.getTime();
