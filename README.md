@@ -8,7 +8,8 @@ Displays current APR, daily estimated yield ($) and annual estimated yield ($).
 
 ## Features
 
-- Generates the HUD 
+- Generates the HUD
 - Automatically checks the chain for deposit transaction timestamp, to calculate APR
   - Warning: CORS issues on occassion, falls back to manual timestamp entry
   - Saves deposit time to local storage
+  - HUD updates when Uniswap "Unclaimed fees" updates, which is useful when a position is young
