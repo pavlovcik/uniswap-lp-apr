@@ -1,8 +1,15 @@
-import { TimestampQueryResponse } from "./@types";
-
 const UNISWAP_V3_API = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3";
 
-export async function queryTimestampFromBlockchain(id: number): Promise<TimestampQueryResponse> {
+export const network = {
+	queryTimestampFromBlockchain,
+	fetchFromUniswap,
+};
+
+export type TimestampQueryResponse = {
+	data: { positions: [{ transaction: { timestamp: "1639349303" } }] };
+};
+
+async function queryTimestampFromBlockchain(id: number): Promise<TimestampQueryResponse> {
 	const query = `{"query": "{positions(where: {id: ${id}}) {transaction {timestamp}}}"}`;
 	const fetched = (await fetchFromUniswap(query)) as TimestampQueryResponse;
 	return fetched; // .data.positions[0].transaction.timestamp;

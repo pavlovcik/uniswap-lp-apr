@@ -1,13 +1,14 @@
-import { getPositionIdFromUrl, readLocalStorage, setupDomNode } from "../utils/common";
-import { getPositionValue } from "../utils/get-position-value";
+import { dom } from "../utils/dom";
+import { get } from "../utils/get";
+import { store } from "../utils/store";
 
 export class State {
-	storage = readLocalStorage();
-	domNode = setupDomNode();
+	storage = store.read();
+	domNode = dom.setupDomNode();
 	observerAttached = false;
 	position = {
-		id: getPositionIdFromUrl(),
-		value: getPositionValue(),
+		id: get.positionIdFromUrl(),
+		value: get.positionValue(),
 		time: { deposit: -1, elapsed: -1 } as PositionTiming,
 		yield: { apr: -1, percentage: -1 } as PositionYield,
 	};

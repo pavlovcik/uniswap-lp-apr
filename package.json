@@ -10,7 +10,7 @@
 		"format:prettier": "prettier --write .",
 		"format:eslint": "eslint . --ext .ts,.tsx --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
 		"_build": "run-s _build:*",
-		"_build:clean": "rimraf dist",
+		"_build:clean": "rimraf dist .parcel-cache",
 		"_build:main": "run-s compile _optimize _prepend",
 		"_build:export": "cat dist/closured.js | pbcopy && echo 'Copied to clipboard'",
 		"_optimize": "google-closure-compiler --js dist/index.js --create_source_map ./dist/closured-map --js_output_file dist/closured.js",

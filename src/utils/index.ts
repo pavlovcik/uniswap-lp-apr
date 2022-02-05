@@ -1,18 +1,17 @@
 import { State } from "../setup/State";
-import { calculateTimings } from "./calculate-timings";
-import { calculateYield } from "./calculate-yield";
-import { getDepositTime, getPositionIdFromUrl, syncStatePositionAndDom } from "./common";
-import { getPositionValue } from "./get-position-value";
+import { calculate } from "./calculate";
+import { dom } from "./dom";
+import { get } from "./get";
 
 export async function main(state: State) {
-	console.log(state);
-	const depositTime = await getDepositTime(state);
-	const timings = calculateTimings(depositTime);
+	const depositTime = await get.depositTime(state);
+	const timings = calculate.timings(depositTime);
 	const positionState = {
-		id: getPositionIdFromUrl(),
-		value: getPositionValue(),
+		id: get.positionIdFromUrl(),
+		value: get.positionValue(),
 		time: timings,
-		yield: calculateYield(timings.elapsed),
+		yield: calculate.yield(timings.elapsed),
 	};
-	syncStatePositionAndDom(state, positionState);
+	dom.syncStatePositionAndDom(state, positionState);
+	return state;
 }
