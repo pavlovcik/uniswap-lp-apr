@@ -1,7 +1,7 @@
 import { renderUI } from "./render-ui";
-import { attachMutationObserver } from "./utils/attach-mutation-observer";
-import { getPositionIdFromUrl, readLocalStorage, setupDomNode } from "./utils/common";
-import { queryBlockchain } from "./utils/query-blockchain";
+import { attachMutationObserver } from "./attach-mutation-observer";
+import { getPositionIdFromUrl, readLocalStorage, setupDomNode } from "./common";
+import { queryBlockchain } from "./query-blockchain";
 
 export const MS_IN_YEAR = 31536000000;
 export const state = {

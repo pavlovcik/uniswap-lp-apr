@@ -1,5 +1,5 @@
-import { state } from "../calculate-apr";
-import { TimestampQueryResponse } from "../render-ui";
+import { state } from "./calculate-apr";
+import { TimestampQueryResponse } from "./render-ui";
 import { calculateTimings } from "./calculate-timings";
 import { updateDomNode } from "./common";
 import { readDomData } from "./read-dom-data";

@@ -1,4 +1,4 @@
-import { TimestampQueryResponse } from "../render-ui";
+import { TimestampQueryResponse } from "./render-ui";
 
 const UNISWAP_V3_API = "https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3";
 

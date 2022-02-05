@@ -1,5 +1,5 @@
-import { state, POSITION_ID, MS_IN_YEAR } from "../calculate-apr";
-import { TimestampQueryResponse } from "../render-ui";
+import { state, POSITION_ID, MS_IN_YEAR } from "./calculate-apr";
+import { TimestampQueryResponse } from "./render-ui";
 
 export function calculateTimings(timestamp: TimestampQueryResponse) {
     let depositTime;
