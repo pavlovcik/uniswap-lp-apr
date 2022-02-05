@@ -9,7 +9,7 @@ import { State } from "./State";
 		state.storage[state.position.id] = newDepositTime;
 		writeLocalStorage(state);
 	}
-	main(state);
+	await main(state);
 	attachMutationObserver(state);
 	return state;
 })((window.state = new State()));

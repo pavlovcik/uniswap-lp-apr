@@ -17,20 +17,20 @@ export function attachMutationObserver(state: State) {
 		subtree: true,
 	});
 
-	function mutator(mutation: MutationRecord) {
+	async function mutator(mutation: MutationRecord) {
 		if (mutation.type === "childList") {
-			main(state);
+			await main(state);
 		}
 	}
 }
 
-export function getDepositTime(state: State) {
+export async function getDepositTime(state: State) {
 	let depositTime;
 	// get from cache
 	depositTime = getDepositTimeFromCache(state);
 	// get from blockchain
 	if (!depositTime) {
-		depositTime = queryTimestampFromBlockchain(getPositionIdFromUrl());
+		depositTime = await queryTimestampFromBlockchain(getPositionIdFromUrl());
 		depositTime = parseDateFromTheGraph(depositTime);
 	}
 	// get from user manual input

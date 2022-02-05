@@ -5,9 +5,9 @@ import { calculateYield } from "./calculate-yield";
 import { getPositionIdFromUrl, syncStatePositionAndDom } from "./common";
 import { getPositionValue } from "./get-position-value";
 
-export function main(state: State) {
+export async function main(state: State) {
 	console.log(state);
-	const depositTime = getDepositTime(state);
+	const depositTime = await getDepositTime(state);
 	const timings = calculateTimings(depositTime);
 	const positionState = {
 		id: getPositionIdFromUrl(),
