@@ -22,3 +22,13 @@ yarn && yarn build
 
 1. This will copy the compiled code to your clipboard (using MacOS stock `pbcopy`.)
 2. Afterwards make a bookmark and paste the code into the bookmark's URL.
+
+## Troubleshooting
+
+Randomly, on my M1 Mac I started getting `Error: spawn Unknown system error -86` when trying to launch Google Closure Compiler.
+
+Turns out the solution was to install rosetta? Even though I'm pretty sure I already had it, given that I was building this project a couple days ago on the same machine.
+
+```bash
+softwareupdate --install-rosetta
+```
