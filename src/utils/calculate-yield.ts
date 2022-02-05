@@ -1,9 +1,10 @@
-import { MS_IN_YEAR } from ".";
-import { scrapePositionWorth } from "./scrape-position-worth";
-import { PositionYield } from "./types";
+import { PositionYield } from "../setup/State";
+import { getPositionValue } from "./get-position-value";
 
-export function calculateYield(timeElapsed): PositionYield {
-	const { fees, liquidity } = scrapePositionWorth();
+const MS_IN_YEAR = 31536000000;
+
+export function calculateYield(timeElapsed: number): PositionYield {
+	const { fees, liquidity } = getPositionValue();
 	const percentYield = fees / liquidity;
 	const projectedAPR = percentYield / (timeElapsed / MS_IN_YEAR);
 

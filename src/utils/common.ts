@@ -1,5 +1,6 @@
-import { AppState } from "./types";
-import { appState } from ".";
+import type { SerializedTimestamp, State, StatePosition } from "../setup/State";
+import { TimestampQueryResponse } from "./@types";
+
 const CSS_TEXT = `
 position: fixed;
 top: 0;
@@ -42,32 +43,36 @@ export function getPositionIdFromUrl() {
 	if (!lastNumbersInUrl) {
 		throw new Error("No position id found in url");
 	}
-	return lastNumbersInUrl[0];
+	return parseInt(lastNumbersInUrl[0]);
 }
 
-export function writeLocalStorage() {
-	localStorage.setItem("APR", JSON.stringify(appState.storage));
+export function writeLocalStorage(state: State) {
+	localStorage.setItem("APR", JSON.stringify(state.storage));
 }
 
-export function updateDomNode(state: AppState) {
-	// if (!appState.position.yield.apr) {
-	// 	throw new Error("No projected APR data found in state");
-	// }
-
-	// if (!appState.position.worth.liquidity) {
-	// 	throw new Error("No liquidity data found in state");
-	// }
-
+export function updateDomNode(state: State) {
 	return (state.domNode.innerText = `${state.position.yield.apr} · APR\n$${(
 		(state.position.yield.apr / 365) *
-		state.position.worth.liquidity
-	).toFixed(2)} · Daily\n$${(state.position.yield.apr * state.position.worth.liquidity).toFixed(2)} · Annual`);
+		state.position.value.liquidity
+	).toFixed(2)} · Daily\n$${(state.position.yield.apr * state.position.value.liquidity).toFixed(2)} · Annual`);
 }
 
-export function syncStatePositionAndDom(positionState) {
-	return updateDomNode(Object.assign(appState.position, positionState));
+export function syncStatePositionAndDom(state: State, positionState: StatePosition) {
+	const merged = Object.assign(state, { position: positionState });
+	return updateDomNode(merged);
 }
 
 // export function updateDomNodeString(string: string) {
 // 	appState.domNode.innerText = string;
 // }
+
+export function parseDateFromUserInput(userInput: string): SerializedTimestamp {
+	const userInputDate = new Date(userInput);
+	const depositTime = userInputDate.getTime();
+	return depositTime;
+}
+
+export function parseDateFromTheGraph(timestamp: TimestampQueryResponse): SerializedTimestamp {
+	const depositTime = parseInt(timestamp.data.positions[0].transaction.timestamp.concat(`000`));
+	return depositTime;
+}

@@ -1,6 +1,6 @@
-import { PositionWorth } from "./types";
+import { PositionValue } from "../setup/State";
 
-export function scrapePositionWorth(): PositionWorth {
+export function getPositionValue(): PositionValue {
 	const CAPTURED = document.body.innerText.match(/^\$[0-9]{1,9}([,.][0-9]{1,9})/gim);
 	if (!CAPTURED) {
 		throw new Error("No relevant data on DOM found");

@@ -1,16 +1,14 @@
-import { calculateTimings } from "./calculate-timings";
-import { updateDomNode } from "./common";
-import { appState } from ".";
-import { scrapePositionWorth } from "./scrape-position-worth";
-import { calculateYield } from "./calculate-yield";
-import { PositionTiming, PositionYield } from "./types";
+import { main } from ".";
+import { SerializedTimestamp, State } from "../setup/State";
+import { getPositionIdFromUrl, parseDateFromTheGraph, parseDateFromUserInput } from "./common";
+import { queryTimestampFromBlockchain } from "./query-blockchain";
 
-export function attachMutationObserver() {
-	if (appState.observerAttached) {
+export function attachMutationObserver(state: State) {
+	if (state.observerAttached) {
 		throw new Error("Mutation observer already attached.");
 	}
 
-	appState.observerAttached = true;
+	state.observerAttached = true;
 
 	const observer = new MutationObserver((mutations) => mutations.forEach(mutator));
 
@@ -21,12 +19,39 @@ export function attachMutationObserver() {
 
 	function mutator(mutation: MutationRecord) {
 		if (mutation.type === "childList") {
-			console.log(appState);
-			scrapePositionWorth();
-			const positionState = {} as { timings: PositionTiming; yields: PositionYield };
-			positionState.timings = calculateTimings();
-			positionState.yields = calculateYield(positionState.timings.elapsed);
-			syncStatePositionAndDom(positionState);
+			main(state);
 		}
 	}
+}
+
+export function getDepositTime(state: State) {
+	let depositTime;
+	// get from cache
+	depositTime = getDepositTimeFromCache(state);
+	// get from blockchain
+	if (!depositTime) {
+		depositTime = getDepositTimeFromBlockchain();
+		depositTime = parseDateFromTheGraph(depositTime);
+	}
+	// get from user manual input
+	const userInput = prompt("Paste the deposit time here");
+	if (userInput) {
+		depositTime = parseDateFromUserInput(userInput);
+	}
+	if (!depositTime) {
+		throw new Error("No deposit time found.");
+	}
+	return depositTime;
+}
+
+function getDepositTimeFromCache(state: State): SerializedTimestamp | undefined {
+	const depositTime = state.storage[getPositionIdFromUrl()];
+	// if (!depositTime) {
+	// 	throw new Error("No deposit time found.");
+	// }
+	return depositTime;
+}
+
+function getDepositTimeFromBlockchain() {
+	queryTimestampFromBlockchain;
 }
