@@ -1,5 +1,6 @@
 import type { SerializedTimestamp, State, StatePosition } from "../setup/State";
 import { TimestampQueryResponse } from "./@types";
+import { queryTimestampFromBlockchain } from "./query-blockchain";
 
 const CSS_TEXT = `
 position: fixed;
@@ -47,6 +48,7 @@ export function getPositionIdFromUrl() {
 }
 
 export function writeLocalStorage(state: State) {
+	console.log("Writing to local storage");
 	localStorage.setItem("APR", JSON.stringify(state.storage));
 }
 
@@ -74,5 +76,40 @@ export function parseDateFromUserInput(userInput: string): SerializedTimestamp {
 
 export function parseDateFromTheGraph(timestamp: TimestampQueryResponse): SerializedTimestamp {
 	const depositTime = parseInt(timestamp.data.positions[0].transaction.timestamp.concat(`000`));
+	return depositTime;
+}
+
+export async function getDepositTime(state: State) {
+	let depositTime;
+	// get from cache
+	depositTime = getDepositTimeFromCache(state);
+	// get from blockchain
+	if (!depositTime) {
+		depositTime = await queryTimestampFromBlockchain(getPositionIdFromUrl());
+		depositTime = parseDateFromTheGraph(depositTime);
+	}
+	if (!depositTime) {
+		// get from user manual input
+		const userInput = prompt("Paste the deposit time here");
+		if (userInput) {
+			depositTime = parseDateFromUserInput(userInput);
+		}
+	}
+
+	if (!depositTime) {
+		throw new Error("No deposit time found.");
+	} else {
+		// save once deposit time found
+		state.storage[state.position.id] = depositTime;
+		writeLocalStorage(state);
+		return depositTime;
+	}
+}
+
+function getDepositTimeFromCache(state: State): SerializedTimestamp | undefined {
+	const depositTime = state.storage[getPositionIdFromUrl()];
+	// if (!depositTime) {
+	// 	throw new Error("No deposit time found.");
+	// }
 	return depositTime;
 }

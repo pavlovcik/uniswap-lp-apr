@@ -11,14 +11,6 @@ export class State {
 		time: { deposit: -1, elapsed: -1 } as PositionTiming,
 		yield: { apr: -1, percentage: -1 } as PositionYield,
 	};
-
-	constructor() {
-		// depositTime?: SerializedTimestamp
-		// if (depositTime) {
-		// 	this.position.time = calculateTimings(depositTime);
-		// 	this.position.yield = calculateYield(calculateTimings(depositTime).elapsed);
-		// }
-	}
 }
 
 export type SerializedTimestamp = string | number; // timestamp or deposit time
