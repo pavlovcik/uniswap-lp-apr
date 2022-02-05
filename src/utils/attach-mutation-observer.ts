@@ -2,9 +2,8 @@ import { calculateTimings } from "./calculate-timings";
 import { updateDomNode } from "./common";
 import { state } from "./main";
 import { readDomData } from "./read-dom-data";
-import { TimestampQueryResponse } from "./render-ui";
 
-export function attachMutationObserver(timestamp: TimestampQueryResponse) {
+export function attachMutationObserver() {
 	if (state.observerAttached) {
 		throw new Error("Mutation observer already attached.");
 	}

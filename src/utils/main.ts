@@ -15,7 +15,7 @@ export const state = {
 	domNode: setupDomNode(),
 	observerAttached: false,
 	positionId: getPositionIdFromUrl(),
-} as any;
+};
 
 // First check localStorage if the position deposit time is already stored.
 // If yes, then use it.
