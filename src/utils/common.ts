@@ -1,4 +1,4 @@
-import { state } from "./calculate-apr";
+import { state } from "./main";
 
 export function setupDomNode() {
 	const node = document.createElement("div");

@@ -1,6 +1,6 @@
 import { attachMutationObserver } from ".";
 import { updateDomNode, writeLocalStorage } from "./common";
-import { state, POSITION_ID } from "./calculate-apr";
+import { state, POSITION_ID } from "./main";
 import { calculateTimings } from "./calculate-timings";
 import { readDomData } from "./read-dom-data";
 

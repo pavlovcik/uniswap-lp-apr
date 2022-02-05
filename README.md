@@ -25,6 +25,8 @@ yarn && yarn build
 
 ## Troubleshooting
 
+### Google Closure Compiler
+
 Randomly, on my M1 Mac I started getting `Error: spawn Unknown system error -86` when trying to launch Google Closure Compiler.
 
 Turns out the solution was to install rosetta? Even though I'm pretty sure I already had it, given that I was building this project a couple days ago on the same machine.

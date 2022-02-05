@@ -1,4 +1,4 @@
-import { state, POSITION_ID, MS_IN_YEAR } from "./calculate-apr";
+import { state, POSITION_ID, MS_IN_YEAR } from "./main";
 import { TimestampQueryResponse } from "./render-ui";
 
 export function calculateTimings(timestamp: TimestampQueryResponse) {

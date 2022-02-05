@@ -1,4 +1,4 @@
-import { state } from "./calculate-apr";
+import { state } from "./main";
 import { TimestampQueryResponse } from "./render-ui";
 import { calculateTimings } from "./calculate-timings";
 import { updateDomNode } from "./common";
