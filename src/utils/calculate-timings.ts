@@ -1,37 +1,53 @@
+import { appState } from ".";
 import { getPositionIdFromUrl } from "./common";
-import { state, MS_IN_YEAR } from "./main";
-import { TimestampQueryResponse } from "./render-ui";
+import { PositionTiming, TimestampQueryResponse } from "./types";
 
-export function calculateTimings(timestamp?: TimestampQueryResponse) {
-	state.positionId = getPositionIdFromUrl();
-	let depositTime = state.storage[state.positionId];
+export function calculateTimings(_timestamp?: TimestampQueryResponse): PositionTiming {
+	let cachedDepositTime = appState.storage[getPositionIdFromUrl()];
 
-	if (depositTime) {
-		// Load from localStorage
-		// Always check URL in case the user has changed the position ID.
-	} else if (timestamp) {
+	if (_timestamp) {
 		// Load from blockchain
-		try {
-			// Need to concat triple zero to timestamp
-			// e.g.
-			// 1639349303 = 1970-01-19T23:22:29.303Z
-			// 1639349303000 = 2021-12-12T22:48:23.000Z
-			const ts = parseInt(timestamp.data.positions[0].transaction.timestamp.concat(`000`));
-			depositTime = depositTime = ts;
-		} catch (err) {
-			// User manual input
-			console.error(err);
-			depositTime = depositTime = prompt("Paste the deposit time here");
-		}
+		cachedDepositTime = parseDateFromTheGraph(_timestamp);
 	} else {
+		cachedDepositTime = parseDateFromUserInput(prompt("Paste the deposit time here"));
+	}
+
+	if (!cachedDepositTime) {
 		throw new Error("No deposit time found.");
 	}
 
 	const NOW = new Date();
-	const DEPOSIT_TIME_LOCAL = new Date(depositTime);
+	const DEPOSIT_TIME_LOCAL = new Date(cachedDepositTime);
 
 	const TIMEZONE_OFFSET = DEPOSIT_TIME_LOCAL.getTimezoneOffset() * 60000;
-	state.depositTime = new Date(DEPOSIT_TIME_LOCAL.getTime() - TIMEZONE_OFFSET);
-	state.timeElapsed = NOW.getTime() - state.depositTime.getTime();
-	state.projectedAPR = state.percentYield / (state.timeElapsed / MS_IN_YEAR);
+	const depositTime = new Date(DEPOSIT_TIME_LOCAL.getTime() - TIMEZONE_OFFSET);
+	const timeElapsed = NOW.getTime() - depositTime.getTime();
+
+	return {
+		deposit: depositTime,
+		elapsed: timeElapsed,
+	};
+}
+function parseDateFromUserInput(userInput) {
+	let depositTime;
+	if (userInput) {
+		try {
+			const userInputDate = new Date(userInput);
+			depositTime = userInputDate;
+		} catch (error) {
+			console.error(error);
+		}
+	}
+	return depositTime;
+}
+
+function parseDateFromTheGraph(_timestamp: TimestampQueryResponse) {
+	let depositTime;
+	try {
+		depositTime = parseInt(_timestamp.data.positions[0].transaction.timestamp.concat(`000`));
+	} catch (err) {
+		// User manual input
+		console.error(err);
+	}
+	return depositTime;
 }

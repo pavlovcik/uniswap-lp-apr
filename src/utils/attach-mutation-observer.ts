@@ -1,14 +1,16 @@
 import { calculateTimings } from "./calculate-timings";
 import { updateDomNode } from "./common";
-import { state } from "./main";
-import { readDomData } from "./read-dom-data";
+import { appState } from ".";
+import { scrapePositionWorth } from "./scrape-position-worth";
+import { calculateYield } from "./calculate-yield";
+import { PositionTiming, PositionYield } from "./types";
 
 export function attachMutationObserver() {
-	if (state.observerAttached) {
+	if (appState.observerAttached) {
 		throw new Error("Mutation observer already attached.");
 	}
 
-	state.observerAttached = true;
+	appState.observerAttached = true;
 
 	const observer = new MutationObserver((mutations) => mutations.forEach(mutator));
 
@@ -19,20 +21,12 @@ export function attachMutationObserver() {
 
 	function mutator(mutation: MutationRecord) {
 		if (mutation.type === "childList") {
-			// console.log(JSON.stringify(state, null, "\t"));
-			console.log(state);
-			// if (state.positionId != getPositionIdFromUrl()) {
-			// 	state.positionId = getPositionIdFromUrl();
-			// 	state.storage = readDomData();
-			// }
-
-			readDomData();
-			calculateTimings();
-			updateDomNode(
-				`${state.projectedAPR} · APR\n$${((state.projectedAPR / 365) * state.liquidity).toFixed(2)} · Daily\n$${(
-					state.projectedAPR * state.liquidity
-				).toFixed(2)} · Annual`
-			);
+			console.log(appState);
+			scrapePositionWorth();
+			const positionState = {} as { timings: PositionTiming; yields: PositionYield };
+			positionState.timings = calculateTimings();
+			positionState.yields = calculateYield(positionState.timings.elapsed);
+			syncStatePositionAndDom(positionState);
 		}
 	}
 }
