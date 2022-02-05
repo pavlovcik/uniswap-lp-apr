@@ -1,6 +1,6 @@
 import { main } from ".";
 import { SerializedTimestamp, State } from "../setup/State";
-import { getPositionIdFromUrl, parseDateFromTheGraph, parseDateFromUserInput } from "./common";
+import { getPositionIdFromUrl, parseDateFromTheGraph, parseDateFromUserInput, writeLocalStorage } from "./common";
 import { queryTimestampFromBlockchain } from "./query-blockchain";
 
 export function attachMutationObserver(state: State) {
@@ -30,7 +30,7 @@ export function getDepositTime(state: State) {
 	depositTime = getDepositTimeFromCache(state);
 	// get from blockchain
 	if (!depositTime) {
-		depositTime = getDepositTimeFromBlockchain();
+		depositTime = queryTimestampFromBlockchain(getPositionIdFromUrl());
 		depositTime = parseDateFromTheGraph(depositTime);
 	}
 	// get from user manual input
@@ -40,8 +40,11 @@ export function getDepositTime(state: State) {
 	}
 	if (!depositTime) {
 		throw new Error("No deposit time found.");
+	} else {
+		// save once deposit time found
+		writeLocalStorage(state);
+		return depositTime;
 	}
-	return depositTime;
 }
 
 function getDepositTimeFromCache(state: State): SerializedTimestamp | undefined {
@@ -50,8 +53,4 @@ function getDepositTimeFromCache(state: State): SerializedTimestamp | undefined 
 	// 	throw new Error("No deposit time found.");
 	// }
 	return depositTime;
-}
-
-function getDepositTimeFromBlockchain() {
-	queryTimestampFromBlockchain;
 }

@@ -1,12 +1,10 @@
-import { calculateTimings } from "../utils/calculate-timings";
-import { calculateYield } from "../utils/calculate-yield";
 import { getPositionIdFromUrl, readLocalStorage, setupDomNode } from "../utils/common";
 import { getPositionValue } from "../utils/get-position-value";
 
 export class State {
 	storage = readLocalStorage();
 	domNode = setupDomNode();
-	observerAttached = false as boolean;
+	observerAttached = false;
 	position = {
 		id: getPositionIdFromUrl(),
 		value: getPositionValue(),
@@ -14,11 +12,12 @@ export class State {
 		yield: { apr: -1, percentage: -1 } as PositionYield,
 	};
 
-	constructor(depositTime?: SerializedTimestamp) {
-		if (depositTime) {
-			this.position.time = calculateTimings(depositTime);
-			this.position.yield = calculateYield(calculateTimings(depositTime).elapsed);
-		}
+	constructor() {
+		// depositTime?: SerializedTimestamp
+		// if (depositTime) {
+		// 	this.position.time = calculateTimings(depositTime);
+		// 	this.position.yield = calculateYield(calculateTimings(depositTime).elapsed);
+		// }
 	}
 }
 

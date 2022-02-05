@@ -1,23 +1,20 @@
+import { main } from "../utils";
 import { attachMutationObserver } from "../utils/attach-mutation-observer";
-import { initializeUI } from "./initialize-ui";
-import { queryTimestampFromBlockchain } from "../utils/query-blockchain";
+import { writeLocalStorage } from "../utils/common";
 import { State } from "./State";
 
-async function setup(state: State) {
-	// First check localStorage if the position deposit time is already stored.
-	let positionDepositTime = state.storage[state.position.id];
-
-	if (!positionDepositTime) {
-		// If not found, query blockchain for the deposit time.
-		positionDepositTime = await queryTimestampFromBlockchain(state.position.id);
+(async function setup(state: State) {
+	const newDepositTime = prompt(`APR: ${state.position.yield.apr}\nPaste in a new deposit time to update.`);
+	if (newDepositTime) {
+		state.storage[state.position.id] = newDepositTime;
+		writeLocalStorage(state);
 	}
-
-	initializeUI(state);
+	main(state);
 	attachMutationObserver(state);
 	return state;
+})((window.state = new State()));
+declare global {
+	interface Window {
+		state: State;
+	}
 }
-
-// @ts-expect-error attach state to window
-window.state = new State();
-// @ts-expect-error window property
-setup(window.state).then(console.log).catch(console.error);
