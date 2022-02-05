@@ -1,4 +1,4 @@
-import { State } from "../setup/State";
+import { State } from "../State";
 import { calculate } from "./calculate";
 import { dom } from "./dom";
 import { get } from "./get";

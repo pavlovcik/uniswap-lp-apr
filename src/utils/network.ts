@@ -12,7 +12,7 @@ export type TimestampQueryResponse = {
 async function queryTimestampFromBlockchain(id: number): Promise<TimestampQueryResponse> {
 	const query = `{"query": "{positions(where: {id: ${id}}) {transaction {timestamp}}}"}`;
 	const fetched = (await fetchFromUniswap(query)) as TimestampQueryResponse;
-	return fetched; // .data.positions[0].transaction.timestamp;
+	return fetched;
 }
 
 async function fetchFromUniswap(body: string) {

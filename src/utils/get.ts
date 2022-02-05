@@ -1,4 +1,4 @@
-import { PositionValue, SerializedTimestamp, State } from "../setup/State";
+import { PositionValue, SerializedTimestamp, State } from "../State";
 import { network } from "./network";
 import { parse } from "./parse";
 import { store } from "./store";

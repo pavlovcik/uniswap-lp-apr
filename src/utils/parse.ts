@@ -1,4 +1,4 @@
-import { SerializedTimestamp } from "../setup/State";
+import { SerializedTimestamp } from "../State";
 import { TimestampQueryResponse } from "./network";
 
 export const parse = {

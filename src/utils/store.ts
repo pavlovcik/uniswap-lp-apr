@@ -1,4 +1,4 @@
-import { State } from "../setup/State";
+import { State } from "../State";
 
 export const store = {
 	write: writeLocalStorage,

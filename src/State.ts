@@ -1,6 +1,6 @@
-import { dom } from "../utils/dom";
-import { get } from "../utils/get";
-import { store } from "../utils/store";
+import { dom } from "./utils/dom";
+import { get } from "./utils/get";
+import { store } from "./utils/store";
 
 export class State {
 	storage = store.read();

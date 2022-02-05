@@ -1,5 +1,5 @@
 import { main } from ".";
-import type { State, StatePosition } from "../setup/State";
+import type { State, StatePosition } from "../State";
 
 export const dom = {
 	setupDomNode,

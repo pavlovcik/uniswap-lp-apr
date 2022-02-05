@@ -1,4 +1,4 @@
-import { PositionTiming, PositionYield, SerializedTimestamp } from "../setup/State";
+import { PositionTiming, PositionYield, SerializedTimestamp } from "../State";
 import { get } from "./get";
 const MS_IN_YEAR = 31536000000;
 
