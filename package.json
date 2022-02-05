@@ -5,16 +5,18 @@
 	"author": "アレクサンダー.eth <gpg@pavlovcik.com>",
 	"license": "MIT",
 	"scripts": {
-		"prebuild": "rimraf dist",
-		"build": "run-s compile optimize prepend",
-		"postbuild": "cat dist/closured.js | pbcopy && echo 'Copied to clipboard'",
+		"build": "run-p _build format",
+		"_build": "run-s _build:*",
+		"_build:clean": "rimraf dist",
+		"_build:main": "run-s compile _optimize _prepend",
+		"_build:export": "cat dist/closured.js | pbcopy && echo 'Copied to clipboard'",
 		"compile": "parcel build src/index.ts --dist-dir dist",
-		"optimize": "google-closure-compiler dist/index.js --js_output_file dist/closured.js",
-		"prepend": "ts-node scripts/append-javascript.ts dist/closured.js",
-		"watch": "yarn nodemon --ignore dist --exec 'yarn build'",
 		"format": "run-s format:*",
 		"format:prettier": "prettier --write .",
-		"format:eslint": "eslint . --ext .ts,.tsx --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'"
+		"format:eslint": "eslint . --ext .ts,.tsx --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
+		"_optimize": "google-closure-compiler dist/index.js --js_output_file dist/closured.js",
+		"_prepend": "ts-node scripts/append-javascript.ts dist/closured.js",
+		"_watch": "yarn nodemon --ignore dist --exec 'yarn build'"
 	},
 	"dependencies": {
 		"@typescript-eslint/parser": "^5.10.2",
