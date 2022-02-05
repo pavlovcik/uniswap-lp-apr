@@ -1,4 +1,5 @@
-import { callback } from "./callback";
+import { renderUI } from "./render-ui";
+import { attachMutationObserver } from "./utils/attach-mutation-observer";
 import { getPositionIdFromUrl, readLocalStorage, setupDomNode } from "./utils/common";
 import { queryBlockchain } from "./utils/query-blockchain";
 
@@ -12,10 +13,13 @@ export const state = {
 	projectedAPR: undefined,
 	storage: readLocalStorage(),
 	domNode: setupDomNode(),
+	observerAttached: false,
 } as any;
 
 export const POSITION_ID = getPositionIdFromUrl();
+
 const queryTimestamp = `{"query": "{positions(where: {id: ${POSITION_ID}}) {transaction {timestamp}}}"}`;
 
-
-queryBlockchain(queryTimestamp).then(callback);
+queryBlockchain(queryTimestamp)
+	.then(renderUI)
+	.then(attachMutationObserver);

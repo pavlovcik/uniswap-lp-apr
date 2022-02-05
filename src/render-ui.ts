@@ -6,7 +6,7 @@ import { readDomData } from "./utils/read-dom-data";
 
 export type TimestampQueryResponse = { data: { positions: [{ transaction: { timestamp: "1639349303" } }] } };
 
-export function callback(timestamp: TimestampQueryResponse) {
+export function renderUI(timestamp: TimestampQueryResponse) {
 	readDomData();
 
 	calculateTimings(timestamp);
@@ -26,5 +26,5 @@ export function callback(timestamp: TimestampQueryResponse) {
 		writeLocalStorage();
 	}
 
-	attachMutationObserver(timestamp);
+	return timestamp;
 }
