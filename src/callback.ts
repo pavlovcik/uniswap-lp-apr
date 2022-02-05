@@ -4,9 +4,9 @@ import { state, POSITION_ID } from "./calculate-apr";
 import { calculateTimings } from "./utils/calculate-timings";
 import { readDomData } from "./utils/read-dom-data";
 
-export type Timestamp = { data: { positions: [{ transaction: { timestamp: "1639349303" } }] } };
+export type TimestampQueryResponse = { data: { positions: [{ transaction: { timestamp: "1639349303" } }] } };
 
-export function callback(timestamp: unknown) {
+export function callback(timestamp: TimestampQueryResponse) {
 	readDomData();
 
 	calculateTimings(timestamp);
@@ -26,5 +26,5 @@ export function callback(timestamp: unknown) {
 		writeLocalStorage();
 	}
 
-	attachMutationObserver();
+	attachMutationObserver(timestamp);
 }
