@@ -1,5 +1,5 @@
-import fs from 'fs'
+import fs from "fs";
 
-const target = process.argv[2]
-const content = fs.readFileSync(target, 'utf-8')
-fs.writeFileSync(target, "javascript:(function apr(){" + content + "})();\n")
+const target = process.argv[2];
+const content = fs.readFileSync(target, "utf-8");
+fs.writeFileSync(target, "javascript:(function apr(){" + content + "})();\n");

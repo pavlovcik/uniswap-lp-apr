@@ -4,11 +4,11 @@ A quick way to monitor the performance of your Uniswap V3 positions. Displays cu
 
 ## Features
 
-- Generates the HUD.
-- Automatically checks the chain for deposit transaction timestamp, to calculate APR.
-  - Warning: CORS issues on occasion, falls back to manual timestamp entry.
-  - Saves deposit time to local storage.
-  - HUD updates when Uniswap "Unclaimed fees" updates, which is useful when a position is young.
+-   Generates the HUD.
+-   Automatically checks the chain for deposit transaction timestamp, to calculate APR.
+    -   Warning: CORS issues on occasion, falls back to manual timestamp entry.
+    -   Saves deposit time to local storage.
+    -   HUD updates when Uniswap "Unclaimed fees" updates, which is useful when a position is young.
 
 ## Screenshot
 

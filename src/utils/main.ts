@@ -14,12 +14,13 @@ export const state = {
 	storage: readLocalStorage(),
 	domNode: setupDomNode(),
 	observerAttached: false,
+	positionId: getPositionIdFromUrl(),
 } as any;
 
-export const POSITION_ID = getPositionIdFromUrl();
+// First check localStorage if the position deposit time is already stored.
+// If yes, then use it.
+// If not, query the chain for the deposit time.
 
-const queryTimestamp = `{"query": "{positions(where: {id: ${POSITION_ID}}) {transaction {timestamp}}}"}`;
+const queryTimestamp = `{"query": "{positions(where: {id: ${state.positionId}}) {transaction {timestamp}}}"}`;
 
-queryBlockchain(queryTimestamp)
-	.then(renderUI)
-	.then(attachMutationObserver);
+queryBlockchain(queryTimestamp).then(renderUI).then(attachMutationObserver);

@@ -1,10 +1,11 @@
-import { attachMutationObserver } from ".";
-import { updateDomNode, writeLocalStorage } from "./common";
-import { state, POSITION_ID } from "./main";
 import { calculateTimings } from "./calculate-timings";
+import { updateDomNode, writeLocalStorage } from "./common";
+import { state } from "./main";
 import { readDomData } from "./read-dom-data";
 
-export type TimestampQueryResponse = { data: { positions: [{ transaction: { timestamp: "1639349303" } }] } };
+export type TimestampQueryResponse = {
+	data: { positions: [{ transaction: { timestamp: "1639349303" } }] };
+};
 
 export function renderUI(timestamp: TimestampQueryResponse) {
 	readDomData();
@@ -22,7 +23,7 @@ export function renderUI(timestamp: TimestampQueryResponse) {
 	const newDepositTime = prompt(`APR: ${state.projectedAPR}\nPaste in a new deposit time to update.`);
 
 	if (newDepositTime) {
-		state.storage[POSITION_ID] = newDepositTime;
+		state.storage[state.positionId] = newDepositTime;
 		writeLocalStorage();
 	}
 
