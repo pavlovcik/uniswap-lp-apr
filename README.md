@@ -12,7 +12,7 @@ A quick way to monitor the performance of your Uniswap V3 positions. Displays cu
 
 ## Screenshot
 
-![image](https://user-images.githubusercontent.com/4975670/151696915-04a0fad0-b9e3-4c69-b8a4-2121d8a4fecd.png)
+![image](https://user-images.githubusercontent.com/4975670/152696785-2efd1fa6-6b20-4295-9dd6-60c6ad82cd4a.png)
 
 ## Installation
 
