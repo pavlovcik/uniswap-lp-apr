@@ -6,7 +6,8 @@
 	"ignorePatterns": ["contracts/", "research/", "dist/"],
 	"rules": {
 		"@typescript-eslint/explicit-module-boundary-types": "off",
-		"prettier/prettier": "error"
+		"prettier/prettier": "error",
+		"no-debugger": "warn"
 	},
 	"env": {
 		"browser": true

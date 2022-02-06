@@ -5,7 +5,8 @@ import { dom } from "./utils/dom";
 
 const state = (window.state = new State());
 
-dom.attachMutationObserver(state);
+dom.attachMutationObserver(state); // just once
+
 main(state);
 console.log(`Uniswap APR Bookmarklet loaded successfully. Version ${version}.`);
 console.log(`Access bookmarklet state via window.state.`);

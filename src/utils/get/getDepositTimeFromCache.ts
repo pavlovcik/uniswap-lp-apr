@@ -1,8 +1,6 @@
 import { SerializedTimestamp, State } from "../../State";
-import { getPositionIdFromUrl } from "./getPositionIdFromUrl";
 
-export function getDepositTimeFromCache(state: State): SerializedTimestamp | undefined {
-	// console.trace(state);
-	const depositTime = state.storage[getPositionIdFromUrl()];
+export function getDepositTimeFromCache(state: State, positionId: number): SerializedTimestamp | undefined {
+	const depositTime = state.storage[positionId];
 	return depositTime;
 }

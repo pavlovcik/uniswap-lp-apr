@@ -19,7 +19,6 @@ export function getPositionValue(): PositionValue {
 			const float = CAPTURED[id].replace(",", "").slice(1);
 			return parseFloat(float); // remove $ and commas
 		} catch (err) {
-			console.error(err);
 			return 0;
 		}
 	}
