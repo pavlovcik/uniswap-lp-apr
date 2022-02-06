@@ -1,4 +1,4 @@
-export function getPositionIdFromUrl(): number {
+export function getPositionIdFromUrl(): -1 | number {
 	const lastNumbersInUrl = window.location.href.match(/\d+/gim);
 	if (!lastNumbersInUrl) {
 		console.error("No position id found in url");

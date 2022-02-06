@@ -1,5 +1,5 @@
 import { SerializedTimestamp } from "../State";
-import { TimestampQueryResponse } from "./network";
+import { TimestampQueryResponse } from "./get/getDepositTimeFromSubgraph";
 
 export const parse = {
 	dateFromUserInput: parseDateFromUserInput,

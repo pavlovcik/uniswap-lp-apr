@@ -1,26 +1,21 @@
+import { get } from ".";
 import { State } from "../../State";
-import { network } from "../network";
 import { parse } from "../parse";
 import { store } from "../store";
 import { getDepositTimeFromCache } from "./getDepositTimeFromCache";
-import { getPositionIdFromUrl } from "./getPositionIdFromUrl";
+import { getDepositTimeFromUserInput } from "./getDepositTimeFromUserInput";
 
 export async function getDepositTime(state: State) {
-	// console.trace(state);
 	let depositTime;
-	// get from cache
 	depositTime = getDepositTimeFromCache(state);
-	// get from blockchain
+
 	if (!depositTime) {
-		depositTime = await network.queryTimestampFromBlockchain(getPositionIdFromUrl());
+		depositTime = await get.depositTimeFromSubgraph(get.positionIdFromUrl());
 		depositTime = parse.dateFromTheGraph(depositTime);
 	}
+
 	if (!depositTime) {
-		// get from user manual input
-		const userInput = prompt("Paste the deposit time here");
-		if (userInput) {
-			depositTime = parse.dateFromUserInput(userInput);
-		}
+		depositTime = getDepositTimeFromUserInput();
 	}
 
 	if (!depositTime) {
