@@ -7,7 +7,6 @@ export const store = {
 };
 
 function writeLocalStorage(state: State) {
-	console.log("Writing to local storage");
 	localStorage.setItem("APR", JSON.stringify(state.storage));
 }
 function readLocalStorage() {

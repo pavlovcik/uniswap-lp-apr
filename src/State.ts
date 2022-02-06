@@ -2,15 +2,22 @@ import { dom } from "./utils/dom";
 import { get } from "./utils/get";
 import { store } from "./utils/store";
 
+const ignoreError = (callback) => {
+	try {
+		return callback();
+	} catch (error) {
+		return 0;
+	}
+};
 export class State {
 	storage = store.read();
 	domNode = dom.setupDomNode();
 	observerAttached = false;
 	position = {
-		id: get.positionIdFromUrl(),
-		value: get.positionValue(),
-		time: { deposit: -1, elapsed: -1 } as PositionTiming,
-		yield: { apr: -1, percentage: -1 } as PositionYield,
+		id: ignoreError(get.positionIdFromUrl),
+		value: ignoreError(get.positionValue),
+		time: { deposit: 0, elapsed: 0 } as PositionTiming,
+		yield: { apr: 0, percentage: 0 } as PositionYield,
 	};
 }
 

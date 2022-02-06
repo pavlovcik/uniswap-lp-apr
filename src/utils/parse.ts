@@ -13,6 +13,9 @@ function parseDateFromUserInput(userInput: string): SerializedTimestamp {
 }
 
 function parseDateFromTheGraph(timestamp: TimestampQueryResponse): SerializedTimestamp {
-	const depositTime = parseInt(timestamp.data.positions[0].transaction.timestamp.concat(`000`));
+	const depositTime = parseInt(timestamp?.data?.positions[0]?.transaction?.timestamp?.concat(`000`));
+	if (!depositTime) {
+		throw new Error("Could not parse timestamp from The Graph");
+	}
 	return depositTime;
 }
