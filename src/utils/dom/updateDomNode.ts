@@ -17,5 +17,11 @@ export function updateDomNode(state: State) {
 	if (apr && liquidity) buffer.push(`$${daily} · Daily`);
 	if (apr && liquidity) buffer.push(`$${annual.toFixed(2)} · Annual`);
 
+	if (buffer.length) {
+		node.className = "active";
+	} else {
+		node.className = "";
+	}
+
 	return (node.innerText = buffer.join(`\n`)); // line breaks
 }
