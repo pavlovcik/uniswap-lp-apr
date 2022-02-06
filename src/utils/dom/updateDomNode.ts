@@ -13,7 +13,7 @@ export function updateDomNode(state: State) {
 
 	const buffer = [] as string[];
 
-	if (apr) buffer.push(`${apr} · APR`);
+	if (apr) buffer.push(`${(apr * 100).toFixed(4)}% · APR`);
 	if (apr && liquidity) buffer.push(`$${daily} · Daily`);
 	if (apr && liquidity) buffer.push(`$${annual.toFixed(2)} · Annual`);
 
