@@ -8,6 +8,7 @@ const state = (window.state = new State());
 dom.attachMutationObserver(state);
 main(state);
 console.log(`Uniswap APR Bookmarklet loaded successfully. Version ${version}.`);
+console.log(`Access bookmarklet state via window.state.`);
 
 declare global {
 	interface Window {
