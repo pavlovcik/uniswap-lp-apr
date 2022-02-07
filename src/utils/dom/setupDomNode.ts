@@ -7,12 +7,14 @@ const CSS_TEXT = `
     padding: 16px;
     border-radius: 16px;
     margin: 16px 10px;
-    border: 2px solid rgb(25, 27, 31);
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
     font-weight: 500;
 }
 
 #uniswap-apr::after {
-	content: "";
+    content: "";
     position: absolute;
     top: -4px;
     left: -4px;
@@ -28,12 +30,13 @@ const CSS_TEXT = `
 }
 
 #uniswap-apr.active::after {
-	opacity: 0;
+    opacity: 0;
 	transition: none;
 }
 
 #uniswap-apr.active {
-	background: rgb(33, 36, 41);
+    background: rgb(33, 36, 41);
+    border-color: rgb(25, 27, 31);
 }
 
 @keyframes rotate-360 {
