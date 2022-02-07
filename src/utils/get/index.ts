@@ -1,15 +1,15 @@
-import { getDepositTime } from "./getDepositTime";
-import { getDepositTimeFromCache } from "./getDepositTimeFromCache";
+import { getDeposit } from "./getDepositTime";
+import { getDepositFromCache } from "./getDepositFromCache";
 import { getDepositTimeFromSubgraph } from "./getDepositTimeFromSubgraph";
-import { getDepositTimeFromUserInput } from "./getDepositTimeFromUserInput";
+import { getDepositFromUserInput } from "./getDepositTimeFromUserInput";
 import { getPositionIdFromUrl } from "./getPositionIdFromUrl";
 import { getPositionValue } from "./getPositionValue";
 
 export const get = {
 	positionValue: getPositionValue,
 	positionIdFromUrl: getPositionIdFromUrl,
-	depositTime: getDepositTime,
-	depositTimeFromUserInput: getDepositTimeFromUserInput,
-	depositTimeFromCache: getDepositTimeFromCache,
+	deposit: getDeposit,
+	depositFromCache: getDepositFromCache,
+	depositFromUserInput: getDepositFromUserInput,
 	depositTimeFromSubgraph: getDepositTimeFromSubgraph,
 };

@@ -4,11 +4,11 @@ import { dom } from "./dom";
 import { get } from "./get";
 
 export async function main(state: State) {
-	const depositTime = get.depositTime(state);
-	if (depositTime === -1) {
+	const deposit = get.deposit(state);
+	if (!deposit) {
 		return;
 	}
-	const timings = calculate.timings(depositTime);
+	const timings = calculate.timings(deposit);
 
 	const positionState = {
 		id: get.positionIdFromUrl(), // -1 if not found,

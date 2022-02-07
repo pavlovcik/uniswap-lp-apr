@@ -5,7 +5,7 @@ import { store } from "../store";
 
 import { updateDomNode } from "../dom/updateDomNode";
 import { dom } from "../dom/index";
-import { Store } from "./getDepositTimeFromCache";
+import { Deposit } from "./getDepositFromCache";
 
 /**
  * This should read from the LocalStorage cache first,
@@ -13,7 +13,7 @@ import { Store } from "./getDepositTimeFromCache";
  * If reading from the chain fails, prompt the user to enter the deposit time
  */
 
-export function getDepositTime(state: State) {
+export function getDeposit(state: State): Deposit | undefined {
 	const positionId = get.positionIdFromUrl();
 	if (positionId === -1) {
 		state.position.id = positionId;
@@ -25,10 +25,10 @@ export function getDepositTime(state: State) {
 		state.position.value.fees = 0;
 		updateDomNode(state);
 		console.warn("No position id found");
-		return -1;
+		return;
 	}
 
-	const depositTime = get.depositTimeFromCache(state, positionId);
+	const depositTime = get.depositFromCache(state, positionId);
 
 	if (!depositTime) {
 		throw new Error("No deposit time found.");
@@ -48,15 +48,15 @@ function verifyDepositTime(state: State, positionId: number) {
 				const verifiedDepositTime = parse.dateFromTheGraph(subgraphResponse);
 				if (verifiedDepositTime) {
 					// update the state with the new deposit time
-					return (state.storage[positionId] = { source: "thegraph", time: verifiedDepositTime }) as Store;
+					return (state.storage[positionId] = { source: "theGraph", time: verifiedDepositTime }) as Deposit;
 				}
 			}
 		})
 		.catch((err) => {
 			console.error(err);
-			const userInput = get.depositTimeFromUserInput();
-			if (userInput) {
-				return (state.storage[positionId] = { source: "user", time: userInput }) as Store;
+			const userInputDeposit = get.depositFromUserInput();
+			if (userInputDeposit) {
+				return (state.storage[positionId] = userInputDeposit as Deposit);
 			}
 		})
 		.finally(() => {

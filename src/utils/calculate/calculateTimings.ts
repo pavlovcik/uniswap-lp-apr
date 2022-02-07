@@ -1,7 +1,7 @@
 import { PositionTiming, SerializedTimestamp } from "../../State";
-import { Store } from "../get/getDepositTimeFromCache";
+import { Deposit } from "../get/getDepositFromCache";
 
-export function calculateTimings(deposit: Store): PositionTiming {
+export function calculateTimings(deposit: Deposit): PositionTiming {
 	const NOW = new Date();
 	const DEPOSIT_TIME_LOCAL = new Date(deposit.time);
 

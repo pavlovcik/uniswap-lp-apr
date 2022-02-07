@@ -1,8 +1,12 @@
 import { parse } from "../parse";
+import { Deposit } from "./getDepositFromCache";
 
-export function getDepositTimeFromUserInput() {
-	const userInput = prompt("Paste the deposit time here");
-	if (userInput) {
-		return parse.dateFromUserInput(userInput);
+export function getDepositFromUserInput(): Deposit | undefined {
+	const userInputTime = prompt("Paste the deposit time here");
+	if (userInputTime) {
+		return {
+			time: parse.dateFromUserInput(userInputTime),
+			source: "user",
+		};
 	}
 }

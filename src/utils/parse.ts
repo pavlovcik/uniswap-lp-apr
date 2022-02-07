@@ -1,5 +1,5 @@
 import { SerializedTimestamp } from "../State";
-import { TimestampQueryResponse } from "./get/getDepositTimeFromSubgraph";
+import { DepositTimeSubGraphResponse } from "./get/getDepositTimeFromSubgraph";
 
 export const parse = {
 	dateFromUserInput: parseDateFromUserInput,
@@ -15,9 +15,9 @@ function parseDateFromUserInput(userInput: string): SerializedTimestamp {
 	return depositTime;
 }
 
-function parseDateFromTheGraph(timestamp: TimestampQueryResponse): number {
+function parseDateFromTheGraph(timestamp: DepositTimeSubGraphResponse): number {
 	const depositTime = parseInt(timestamp?.data?.positions[0]?.transaction?.timestamp?.concat(`000`));
-	if (!depositTime) {
+	if (!depositTime || isNaN(depositTime)) {
 		throw new TypeError("Could not parse timestamp from The Graph");
 	}
 	return depositTime;
