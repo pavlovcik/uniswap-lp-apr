@@ -1,8 +1,9 @@
 import { PositionTiming, SerializedTimestamp } from "../../State";
+import { Store } from "../get/getDepositTimeFromCache";
 
-export function calculateTimings(depositTime: SerializedTimestamp): PositionTiming {
+export function calculateTimings(deposit: Store): PositionTiming {
 	const NOW = new Date();
-	const DEPOSIT_TIME_LOCAL = new Date(depositTime);
+	const DEPOSIT_TIME_LOCAL = new Date(deposit.time);
 
 	const TIMEZONE_OFFSET = DEPOSIT_TIME_LOCAL.getTimezoneOffset() * 60000;
 	const localizedDepositTime = new Date(DEPOSIT_TIME_LOCAL.getTime() - TIMEZONE_OFFSET);

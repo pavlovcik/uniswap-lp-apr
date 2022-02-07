@@ -4,13 +4,13 @@ import { parse } from "../parse";
 import { store } from "../store";
 
 import { updateDomNode } from "../dom/updateDomNode";
+import { dom } from "../dom/index";
+import { Store } from "./getDepositTimeFromCache";
 
 /**
  * This should read from the LocalStorage cache first,
- * and then always check the chain in parallel to verify the accuracy of the cached deposit time.
+ * and then check the chain in parallel to verify the accuracy of the cached deposit time, if time entered by user.
  * If reading from the chain fails, prompt the user to enter the deposit time
- *
- * Needs to be able to update deposit time state asynchronously
  */
 
 export function getDepositTime(state: State) {
@@ -30,14 +30,12 @@ export function getDepositTime(state: State) {
 
 	const depositTime = get.depositTimeFromCache(state, positionId);
 
-	verifyDepositTime(state, positionId); // runs in background, async
-
 	if (!depositTime) {
 		throw new Error("No deposit time found.");
 	} else {
-		// save once deposit time found
-		state.storage[positionId] = depositTime;
-		store.write(state);
+		if (depositTime.source === "user") {
+			verifyDepositTime(state, positionId); // runs in background, async
+		}
 		return depositTime;
 	}
 }
@@ -50,7 +48,7 @@ function verifyDepositTime(state: State, positionId: number) {
 				const verifiedDepositTime = parse.dateFromTheGraph(subgraphResponse);
 				if (verifiedDepositTime) {
 					// update the state with the new deposit time
-					return (state.storage[positionId] = verifiedDepositTime);
+					return (state.storage[positionId] = { source: "thegraph", time: verifiedDepositTime }) as Store;
 				}
 			}
 		})
@@ -58,8 +56,11 @@ function verifyDepositTime(state: State, positionId: number) {
 			console.error(err);
 			const userInput = get.depositTimeFromUserInput();
 			if (userInput) {
-				return (state.storage[positionId] = userInput);
+				return (state.storage[positionId] = { source: "user", time: userInput }) as Store;
 			}
 		})
-		.finally(() => store.write(state));
+		.finally(() => {
+			dom.updateDomNode(state);
+			store.write(state);
+		});
 }

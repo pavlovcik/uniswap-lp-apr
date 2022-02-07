@@ -9,6 +9,7 @@
 		"_compile": "parcel build src/index.ts --dist-dir dist",
 		"_format:prettier": "prettier --write .",
 		"_format:eslint": "eslint . --ext .ts,.tsx --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
+		"_format:typecheck": "tsc --noEmit",
 		"_build": "run-s _build:*",
 		"_build:clean": "rimraf dist .parcel-cache",
 		"_build:main": "run-s _compile _optimize _prepend",

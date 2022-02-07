@@ -14,5 +14,8 @@ console.log(`Access bookmarklet state via window.state.`);
 declare global {
 	interface Window {
 		state: State;
+		ethereum: any;
+		Web3: any;
+		web3: any;
 	}
 }

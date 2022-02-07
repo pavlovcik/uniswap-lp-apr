@@ -5,13 +5,13 @@ export function getPositionValue(): PositionValue {
 	if (!root) {
 		throw new Error(`No root element found`);
 	}
-	const CAPTURED = root.innerText.match(/^\$\d+(,\d+)*(.\d+)+/gim);
-	if (!CAPTURED) {
+	const relevantData = root.innerText.match(/^\$\d+(,\d+)*(.\d+)+/gim);
+	if (!relevantData) {
 		console.warn("No relevant data on DOM found");
 		return { liquidity: 0, fees: 0 };
 	}
-	const liquidity = parser(CAPTURED, 0);
-	const fees = parser(CAPTURED, 1);
+	const liquidity = parser(relevantData, 0);
+	const fees = parser(relevantData, 1);
 
 	return { liquidity, fees };
 
