@@ -24,7 +24,8 @@ export function getDepositTime(state: State) {
 		state.position.value.liquidity = 0;
 		state.position.value.fees = 0;
 		updateDomNode(state);
-		throw new Error("No position id found");
+		console.warn("No position id found");
+		return -1;
 	}
 
 	const depositTime = get.depositTimeFromCache(state, positionId);

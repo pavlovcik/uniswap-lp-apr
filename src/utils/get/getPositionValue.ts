@@ -7,7 +7,8 @@ export function getPositionValue(): PositionValue {
 	}
 	const CAPTURED = root.innerText.match(/^\$\d+(,\d+)*(.\d+)+/gim);
 	if (!CAPTURED) {
-		throw new Error("No relevant data on DOM found");
+		console.warn("No relevant data on DOM found");
+		return { liquidity: 0, fees: 0 };
 	}
 	const liquidity = parser(CAPTURED, 0);
 	const fees = parser(CAPTURED, 1);

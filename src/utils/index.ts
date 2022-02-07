@@ -5,6 +5,9 @@ import { get } from "./get";
 
 export async function main(state: State) {
 	const depositTime = get.depositTime(state);
+	if (depositTime === -1) {
+		return;
+	}
 	const timings = calculate.timings(depositTime);
 
 	const positionState = {
