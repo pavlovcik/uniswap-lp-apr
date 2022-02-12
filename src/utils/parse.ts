@@ -1,4 +1,3 @@
-import { SerializedTimestamp } from "../State";
 import { DepositTimeSubGraphResponse } from "./get/getDepositTimeFromSubgraph";
 
 export const parse = {
@@ -6,13 +5,16 @@ export const parse = {
 	dateFromTheGraph: parseDateFromTheGraph,
 };
 
-function parseDateFromUserInput(userInput: string): SerializedTimestamp {
+function parseDateFromUserInput(userInput: string): number {
+	const message = `Need to verify that the timezone math is implemented correctly here`;
+	alert(message);
 	const userInputDate = new Date(userInput);
 	const depositTime = userInputDate.getTime();
 	if (!depositTime) {
 		throw new SyntaxError(`Invalid date: ${userInput}`);
 	}
-	return depositTime;
+	// return depositTime;
+	throw new Error(message);
 }
 
 function parseDateFromTheGraph(timestamp: DepositTimeSubGraphResponse): number {

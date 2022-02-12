@@ -1,10 +1,9 @@
 import { get } from ".";
+import { main } from "..";
 import { State } from "../../State";
-import { parse } from "../parse";
 import { store } from "../store";
-
 import { updateDomNode } from "../dom/updateDomNode";
-import { dom } from "../dom/index";
+import { parse } from "../parse";
 import { Deposit } from "./getDepositFromCache";
 
 /**
@@ -31,14 +30,11 @@ export function getDeposit(state: State): Deposit | undefined {
 	const depositTime = get.depositFromCache(state, positionId);
 
 	if (depositTime === void 0 || depositTime.source === void 0 || depositTime.source === "user") {
-
 		verifyDepositTime(state, positionId);
-	} else {
-		console.log(depositTime);
 	}
 
 	if (!depositTime) {
-		throw new Error("No deposit time found.");
+		console.error("No deposit time found.");
 	} else {
 		return depositTime;
 	}
@@ -52,7 +48,10 @@ function verifyDepositTime(state: State, positionId: number) {
 				const verifiedDepositTime = parse.dateFromTheGraph(subgraphResponse);
 				if (verifiedDepositTime) {
 					// update the state with the new deposit time
-					return (state.storage[positionId] = { source: "theGraph", time: verifiedDepositTime }) as Deposit;
+					(state.storage[positionId] = { source: "theGraph", time: verifiedDepositTime }) as Deposit;
+					return state.storage[positionId];
+				} else {
+					throw new Error("No deposit time found .2");
 				}
 			}
 		})
@@ -60,11 +59,14 @@ function verifyDepositTime(state: State, positionId: number) {
 			console.error(err);
 			const userInputDeposit = get.depositFromUserInput();
 			if (userInputDeposit) {
-				return (state.storage[positionId] = userInputDeposit as Deposit);
+				state.storage[positionId] = userInputDeposit as Deposit;
+				return state.storage[positionId];
+			} else {
+				throw new Error("No deposit time found. 3");
 			}
 		})
 		.finally(() => {
-			dom.updateDomNode(state);
 			store.write(state);
+			main(state);
 		});
 }

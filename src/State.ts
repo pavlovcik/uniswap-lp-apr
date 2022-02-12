@@ -21,10 +21,8 @@ export class State {
 	};
 }
 
-export type SerializedTimestamp = string | number; // timestamp or deposit time
-
 export type PositionTiming = {
-	deposit: SerializedTimestamp;
+	deposit: number;
 	elapsed: number;
 };
 
@@ -45,4 +43,4 @@ export type StatePosition = {
 	yield: PositionYield;
 };
 
-export type StateStorage = Record<string, SerializedTimestamp>;
+export type StateStorage = Record<string, number>;
