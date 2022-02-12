@@ -30,12 +30,16 @@ export function getDeposit(state: State): Deposit | undefined {
 
 	const depositTime = get.depositFromCache(state, positionId);
 
+	if (depositTime === void 0 || depositTime.source === void 0 || depositTime.source === "user") {
+
+		verifyDepositTime(state, positionId);
+	} else {
+		console.log(depositTime);
+	}
+
 	if (!depositTime) {
 		throw new Error("No deposit time found.");
 	} else {
-		if (depositTime.source === "user") {
-			verifyDepositTime(state, positionId); // runs in background, async
-		}
 		return depositTime;
 	}
 }
