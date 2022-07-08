@@ -10,7 +10,7 @@ const ignoreError = (callback) => {
 	}
 };
 export class State {
-	storage = store.read();
+	storage = store.read("APR");
 	domNode = dom.setupDomNode();
 	observerAttached = false;
 	position = {

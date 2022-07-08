@@ -66,7 +66,7 @@ function verifyDepositTime(state: State, positionId: number) {
 			}
 		})
 		.finally(() => {
-			store.write(state);
+			store.write("APR", state);
 			main(state);
 		});
 }

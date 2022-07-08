@@ -6,23 +6,24 @@ export const store = {
 	initialize: initializeLocalStorage,
 };
 
-function writeLocalStorage(state: State) {
-	localStorage.setItem("APR", JSON.stringify(state.storage));
+function writeLocalStorage(key: string, state: State) {
+	localStorage.setItem(key, JSON.stringify(state.storage));
 }
-function readLocalStorage() {
+
+function readLocalStorage(key: string) {
 	try {
-		const apr = localStorage.getItem("APR");
-		if (apr) {
-			return JSON.parse(apr);
+		const value = localStorage.getItem(key);
+		if (value) {
+			return JSON.parse(value);
 		} else {
-			throw new Error("No APR found");
+			throw new Error(`No ${key} found`);
 		}
 	} catch (e) {
-		return initializeLocalStorage();
+		return initializeLocalStorage(key);
 	}
 }
 
-function initializeLocalStorage() {
-	localStorage.setItem("APR", "{}");
+function initializeLocalStorage(key: string) {
+	localStorage.setItem(key, "{}");
 	return {};
 }
