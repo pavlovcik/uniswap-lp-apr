@@ -16,9 +16,9 @@ export class State {
 	position = {
 		id: ignoreError(get.positionIdFromUrl),
 		value: ignoreError(get.positionValue),
-		time: { deposit: 0, elapsed: 0 } as PositionTiming,
-		yield: { apr: 0, percentage: 0 } as PositionYield,
-	};
+		time: { deposit: 0, elapsed: 0 },
+		yield: { apr: 0, percentage: 0 },
+	} as StatePosition;
 }
 
 export type PositionTiming = {
