@@ -3,13 +3,14 @@ import { calculate } from "./calculate";
 import { dom } from "./dom";
 import { get } from "./get";
 import { store } from "./store";
+import { DepositStat, Deposit } from "./get/getDepositFromCache";
 
-export async function main(state: State) {
-	const deposit = get.deposit(state);
-	if (!deposit) {
+export function main(state: State) {
+	const _deposit = get.deposit(state);
+	if (!_deposit) {
 		return;
 	}
-	const timings = calculate.timings(deposit);
+	const timings = calculate.timings(_deposit);
 
 	state.position = {
 		id: get.positionIdFromUrl(), // -1 if not found,
@@ -19,11 +20,15 @@ export async function main(state: State) {
 		precision: store.read("PRECISION"), // decimal precision of displayed values
 	};
 
+	const deposits = state.deposits as Deposit[];
 
-	// state.storage[positionState.id]
-	// state.storage[positionState.id] =
-	// store.write("YIELD")
-	// positionState.yield.apr
+	const depositStat = {
+		timestamp: Date.now(),
+		position: state.position,
+	} as DepositStat;
+
+	deposits[state.position.id].stats.push(depositStat);
+
 	dom.sync(state);
 	return state;
 }

@@ -16,7 +16,7 @@ export function attachMutationObserver(state: State) {
 
 	async function mutator(mutation: MutationRecord) {
 		if (mutation.type === "childList") {
-			await main(state);
+			main(state);
 		}
 	}
 }

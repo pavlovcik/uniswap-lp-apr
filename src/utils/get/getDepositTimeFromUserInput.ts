@@ -7,6 +7,7 @@ export function getDepositFromUserInput(): Deposit | undefined {
 		return {
 			time: parse.dateFromUserInput(userInputTime),
 			source: "user",
+			stats: [],
 		};
 	}
 }

@@ -2,9 +2,9 @@ import { get } from ".";
 import { main } from "..";
 import { State } from "../../State";
 import { store } from "../store";
-import { updateDomNode } from "../dom/updateDomNode";
 import { parse } from "../parse";
 import { Deposit } from "./getDepositFromCache";
+import { dom } from "../dom";
 
 /**
  * This should read from the LocalStorage cache first,
@@ -22,21 +22,21 @@ export function getDeposit(state: State): Deposit | undefined {
 		state.position.yield.apr = 0;
 		state.position.value.liquidity = 0;
 		state.position.value.fees = 0;
-		updateDomNode(state);
+		dom.sync(state);
 		console.warn("No position id found");
 		return;
 	}
 
-	const depositTime = get.depositFromCache(state, positionId);
+	const deposit = get.depositFromCache(state, positionId);
 
-	if (depositTime === void 0 || depositTime.source === void 0 || depositTime.source === "user") {
+	if (deposit?.source !== "theGraph") {
 		verifyDepositTime(state, positionId);
 	}
 
-	if (!depositTime) {
+	if (!deposit) {
 		console.error("No deposit time found.");
 	} else {
-		return depositTime;
+		return deposit;
 	}
 }
 

@@ -7,16 +7,16 @@ const state = (window.state = new State());
 
 dom.attachMutationObserver(state); // just once
 
-main(state).then(() => {
-	console.log(`Uniswap APR Bookmarklet loaded successfully. Version ${version}.`);
-	console.log(`Access bookmarklet state via window.state.`);
-});
+main(state);
+
+console.log(`Uniswap APR Bookmarklet loaded successfully. Version ${version}.`);
+console.log(`Access bookmarklet state via window.state.`);
 
 declare global {
 	interface Window {
 		state: State;
-		ethereum: any;
-		Web3: any;
-		web3: any;
+		ethereum: never;
+		Web3: never;
+		web3: never;
 	}
 }
