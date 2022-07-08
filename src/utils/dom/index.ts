@@ -1,11 +1,11 @@
 import { setupDomNode } from "./setupDomNode";
 import { updateDomNode } from "./updateDomNode";
-import { syncStatePositionAndDom } from "./syncStatePositionAndDom";
+import { syncDom } from "./syncStateAndDom";
 import { attachMutationObserver } from "./attachMutationObserver";
 
 export const dom = {
 	setupDomNode,
 	updateDomNode,
-	syncStatePositionAndDom,
+	sync: syncDom,
 	attachMutationObserver,
 };

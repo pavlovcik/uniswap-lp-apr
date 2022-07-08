@@ -16,8 +16,8 @@ export function updateDomNode(state: State) {
 	const yearly = earnings.by(1);
 	const daily = earnings.by(daysInYear);
 	const hourly = earnings.by(hoursInYear);
-	const minutely = earnings.by(minutesInYear);
-	const secondly = earnings.by(secondsInYear);
+	// const minutely = earnings.by(minutesInYear);
+	// const secondly = earnings.by(secondsInYear);
 
 	if (!node) {
 		throw new Error("No dom node found.");
@@ -31,8 +31,8 @@ export function updateDomNode(state: State) {
 			buffer.push(`$${yearly.formatted} · Yearly`);
 			buffer.push(`$${daily.formatted} · Daily`);
 			buffer.push(`$${hourly.formatted} · Hourly`);
-			buffer.push(`$${minutely.formatted} · Minutely`);
-			buffer.push(`$${secondly.formatted} · Secondly`);
+			// buffer.push(`$${minutely.formatted} · Minutely`);
+			// buffer.push(`$${secondly.formatted} · Secondly`);
 		}
 	}
 

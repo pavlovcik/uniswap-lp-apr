@@ -48,10 +48,10 @@ function verifyDepositTime(state: State, positionId: number) {
 				const verifiedDepositTime = parse.dateFromTheGraph(subgraphResponse);
 				if (verifiedDepositTime) {
 					// update the state with the new deposit time
-					(state.storage[positionId] = { source: "theGraph", time: verifiedDepositTime }) as Deposit;
-					return state.storage[positionId];
+					(state.deposits[positionId] = { source: "theGraph", time: verifiedDepositTime }) as Deposit;
+					return state.deposits[positionId];
 				} else {
-					throw new Error("No deposit time found .2");
+					throw new Error("No deposit time found.");
 				}
 			}
 		})
@@ -59,14 +59,14 @@ function verifyDepositTime(state: State, positionId: number) {
 			console.error(err);
 			const userInputDeposit = get.depositFromUserInput();
 			if (userInputDeposit) {
-				state.storage[positionId] = userInputDeposit as Deposit;
-				return state.storage[positionId];
+				state.deposits[positionId] = userInputDeposit as Deposit;
+				return state.deposits[positionId];
 			} else {
-				throw new Error("No deposit time found. 3");
+				throw new Error("No deposit time found.");
 			}
 		})
 		.finally(() => {
-			store.write("APR", state);
+			store.write("DEPOSITS", state.deposits);
 			main(state);
 		});
 }

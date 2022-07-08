@@ -10,7 +10,7 @@ const ignoreError = (callback) => {
 	}
 };
 export class State {
-	storage = store.read("APR");
+	deposits = store.initialize("DEPOSITS", {});
 	domNode = dom.setupDomNode();
 	observerAttached = false;
 	position = {
@@ -18,7 +18,7 @@ export class State {
 		value: ignoreError(get.positionValue),
 		time: { deposit: 0, elapsed: 0 },
 		yield: { apr: 0, percentage: 0 },
-		precision: store.read("PRECISION"),
+		precision: store.initialize("PRECISION", 2),
 	} as StatePosition;
 }
 

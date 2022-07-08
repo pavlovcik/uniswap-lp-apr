@@ -1,13 +1,11 @@
-import { State } from "../State";
-
 export const store = {
 	write: writeLocalStorage,
 	read: readLocalStorage,
 	initialize: initializeLocalStorage,
 };
 
-function writeLocalStorage(key: string, state: State) {
-	localStorage.setItem(key, JSON.stringify(state.storage));
+function writeLocalStorage(key: string, value: unknown) {
+	localStorage.setItem(key, JSON.stringify(value));
 }
 
 function readLocalStorage(key: string) {
@@ -16,14 +14,20 @@ function readLocalStorage(key: string) {
 		if (value) {
 			return JSON.parse(value);
 		} else {
-			throw new Error(`No ${key} found`);
+			console.error(`No ${key} found`);
 		}
 	} catch (e) {
-		return initializeLocalStorage(key);
+		console.error(e);
 	}
+	return null;
 }
 
-function initializeLocalStorage(key: string) {
-	localStorage.setItem(key, "{}");
-	return {};
+function initializeLocalStorage(key: string, value: unknown) {
+	const stored = readLocalStorage(key);
+	if (stored) {
+		return stored;
+	} else {
+		writeLocalStorage(key, value);
+		return value;
+	}
 }

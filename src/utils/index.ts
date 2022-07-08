@@ -11,14 +11,19 @@ export async function main(state: State) {
 	}
 	const timings = calculate.timings(deposit);
 
-	const positionState = {
+	state.position = {
 		id: get.positionIdFromUrl(), // -1 if not found,
 		value: get.positionValue(),
 		time: timings,
 		yield: calculate.yield(timings.elapsed),
-		precision: store.read("PRECISION"), // default float precision of displayed values
+		precision: store.read("PRECISION"), // decimal precision of displayed values
 	};
 
-	dom.syncStatePositionAndDom(state, positionState);
+
+	// state.storage[positionState.id]
+	// state.storage[positionState.id] =
+	// store.write("YIELD")
+	// positionState.yield.apr
+	dom.sync(state);
 	return state;
 }

@@ -13,7 +13,7 @@ const CSS_TEXT = `
     font-weight: 500;
 }
 
-#uniswap-apr::after {
+#uniswap-apr::before {
     content: "";
     position: absolute;
     top: -4px;
@@ -27,9 +27,10 @@ const CSS_TEXT = `
     border-top: 4px solid transparent;
     transition: 0.5s;
     opacity: 1;
+    pointer-events: none;
 }
 
-#uniswap-apr.active::after {
+#uniswap-apr.active::before {
     opacity: 0;
 	transition: none;
 }
