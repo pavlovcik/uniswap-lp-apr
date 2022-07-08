@@ -14,7 +14,7 @@ function readLocalStorage(key: string) {
 		if (value) {
 			return JSON.parse(value);
 		} else {
-			console.error(`No ${key} found`);
+			console.warn(`No "${key}" found in store`);
 		}
 	} catch (e) {
 		console.error(e);

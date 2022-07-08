@@ -11,7 +11,7 @@ export interface DepositStat {
 	position: StatePosition;
 }
 
-export function getDepositFromCache(state: State, positionId: number): Deposit | undefined {
+export function getDepositFromCache(state: State, positionId: number): Deposit {
 	const deposit = state.deposits[positionId];
 	return deposit;
 }

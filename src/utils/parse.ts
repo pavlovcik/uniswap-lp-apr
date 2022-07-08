@@ -13,7 +13,6 @@ function parseDateFromUserInput(userInput: string): number {
 	if (!depositTime) {
 		throw new SyntaxError(`Invalid date: ${userInput}`);
 	}
-	// return depositTime;
 	throw new Error(message);
 }
 
