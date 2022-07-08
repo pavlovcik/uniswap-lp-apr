@@ -1,14 +1,12 @@
 export class ProjectedEarnings {
 	static apr: number;
 	static liquidity: number;
-	static precision = 2;
+	static precision: number;
 
-	constructor(apr: number, liquidity: number, precision?: number) {
+	constructor(apr: number, liquidity: number, precision: number) {
 		ProjectedEarnings.apr = apr;
 		ProjectedEarnings.liquidity = liquidity;
-		if (precision) {
-			ProjectedEarnings.precision = precision;
-		}
+		ProjectedEarnings.precision = precision;
 	}
 
 	public by = (divisor: number) => {

@@ -18,6 +18,7 @@ export class State {
 		value: ignoreError(get.positionValue),
 		time: { deposit: 0, elapsed: 0 },
 		yield: { apr: 0, percentage: 0 },
+		precision: store.read("PRECISION"),
 	} as StatePosition;
 }
 
@@ -41,6 +42,7 @@ export type StatePosition = {
 	value: PositionValue;
 	time: PositionTiming;
 	yield: PositionYield;
+	precision: number;
 };
 
 export type StateStorage = Record<string, number>;

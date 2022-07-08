@@ -11,7 +11,7 @@ export function updateDomNode(state: State) {
 	const apr = state.position.yield.apr;
 	const liquidity = state.position.value.liquidity;
 
-	const earnings = new ProjectedEarnings(apr, liquidity);
+	const earnings = new ProjectedEarnings(apr, liquidity, state.position.precision);
 
 	const yearly = earnings.by(1);
 	const daily = earnings.by(daysInYear);

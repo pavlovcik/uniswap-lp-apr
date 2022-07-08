@@ -2,6 +2,7 @@ import { State } from "../State";
 import { calculate } from "./calculate";
 import { dom } from "./dom";
 import { get } from "./get";
+import { store } from "./store";
 
 export async function main(state: State) {
 	const deposit = get.deposit(state);
@@ -15,6 +16,7 @@ export async function main(state: State) {
 		value: get.positionValue(),
 		time: timings,
 		yield: calculate.yield(timings.elapsed),
+		precision: store.read("PRECISION"), // default float precision of displayed values
 	};
 
 	dom.syncStatePositionAndDom(state, positionState);
