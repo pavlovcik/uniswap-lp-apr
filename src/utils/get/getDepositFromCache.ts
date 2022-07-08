@@ -1,21 +1,17 @@
-import { State } from "../../State";
+import { State, StatePosition } from "../../State";
 export type DepositSource = "theGraph" | "user";
-export interface DepositStat {
-	timestamp: number;
-	position: State["position"];
-	// time.elapsed = 0;
-	// yield.percentage = 0;
-	// yield.apr = 0;
-	// value.liquidity = 0;
-	// value.fees = 0;
-}
-export type Deposit = {
+
+export interface Deposit {
 	time: number;
 	source: DepositSource;
 	stats: DepositStat[];
-};
+}
+export interface DepositStat {
+	timestamp: number;
+	position: StatePosition;
+}
 
 export function getDepositFromCache(state: State, positionId: number): Deposit | undefined {
-	const depositTime = state.deposits[positionId];
-	return depositTime;
+	const deposit = state.deposits[positionId];
+	return deposit;
 }

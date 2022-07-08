@@ -1,10 +1,10 @@
 import { get } from ".";
 import { main } from "..";
-import { State } from "../../State";
-import { store } from "../store";
-import { parse } from "../parse";
-import { Deposit } from "./getDepositFromCache";
+import { Deposits, State } from "../../State";
 import { dom } from "../dom";
+import { parse } from "../parse";
+import { store } from "../store";
+import { Deposit } from "./getDepositFromCache";
 
 /**
  * This should read from the LocalStorage cache first,
@@ -28,13 +28,14 @@ export function getDeposit(state: State): Deposit | undefined {
 	}
 
 	const deposit = get.depositFromCache(state, positionId);
-
+	// if (deposit === void 0 || deposit.source === void 0 || deposit.source === "user") {
 	if (deposit?.source !== "theGraph") {
 		verifyDepositTime(state, positionId);
 	}
+	// }
 
 	if (!deposit) {
-		console.error("No deposit time found.");
+		throw new Error("No deposit time found.");
 	} else {
 		return deposit;
 	}
@@ -46,10 +47,17 @@ function verifyDepositTime(state: State, positionId: number) {
 		.then((subgraphResponse) => {
 			if (subgraphResponse) {
 				const verifiedDepositTime = parse.dateFromTheGraph(subgraphResponse);
+				console.trace(verifiedDepositTime);
 				if (verifiedDepositTime) {
 					// update the state with the new deposit time
-					(state.deposits[positionId] = { source: "theGraph", time: verifiedDepositTime }) as Deposit;
-					return state.deposits[positionId];
+					const deposit = {
+						time: verifiedDepositTime,
+						source: "theGraph",
+						stats: state.deposits[positionId].stats || [],
+					} as Deposit;
+					console.trace(deposit);
+					state.deposits[positionId] = deposit;
+					return deposit;
 				} else {
 					throw new Error("No deposit time found.");
 				}
@@ -66,7 +74,8 @@ function verifyDepositTime(state: State, positionId: number) {
 			}
 		})
 		.finally(() => {
-			store.write("DEPOSITS", state.deposits);
+			// console.trace(state.deposits);
+			store.write("APR", state);
 			main(state);
 		});
 }

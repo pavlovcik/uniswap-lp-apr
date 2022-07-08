@@ -1,5 +1,5 @@
-import { getDeposit } from "./getDepositTime";
 import { getDepositFromCache } from "./getDepositFromCache";
+import { getDeposit } from "./getDepositTime";
 import { getDepositTimeFromSubgraph } from "./getDepositTimeFromSubgraph";
 import { getDepositFromUserInput } from "./getDepositTimeFromUserInput";
 import { getPositionIdFromUrl } from "./getPositionIdFromUrl";

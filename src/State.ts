@@ -1,6 +1,7 @@
 import { dom } from "./utils/dom";
 import { get } from "./utils/get";
 import { store } from "./utils/store";
+import { Deposit } from "./utils/get/getDepositFromCache";
 
 const ignoreError = (callback) => {
 	try {
@@ -9,8 +10,11 @@ const ignoreError = (callback) => {
 		return 0;
 	}
 };
+export interface Deposits {
+	[id: string]: Deposit;
+}
 export class State {
-	deposits = store.initialize("DEPOSITS", {});
+	deposits = store.initialize("DEPOSITS", {}) as Deposits;
 	domNode = dom.setupDomNode();
 	observerAttached = false;
 	position = {

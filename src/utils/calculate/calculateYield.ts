@@ -1,6 +1,6 @@
+import { MS_IN_YEAR } from ".";
 import { PositionYield } from "../../State";
 import { get } from "../get";
-import { MS_IN_YEAR } from ".";
 
 export function calculateYield(timeElapsed: number): PositionYield {
 	const { fees, liquidity } = get.positionValue();

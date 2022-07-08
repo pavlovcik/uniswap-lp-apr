@@ -2,15 +2,16 @@ import { State } from "../State";
 import { calculate } from "./calculate";
 import { dom } from "./dom";
 import { get } from "./get";
+import { DepositStat } from "./get/getDepositFromCache";
 import { store } from "./store";
-import { DepositStat, Deposit } from "./get/getDepositFromCache";
 
 export function main(state: State) {
-	const _deposit = get.deposit(state);
-	if (!_deposit) {
+	const deposit = get.deposit(state);
+	if (!deposit) {
 		return;
 	}
-	const timings = calculate.timings(_deposit);
+
+	const timings = calculate.timings(deposit);
 
 	state.position = {
 		id: get.positionIdFromUrl(), // -1 if not found,
@@ -20,7 +21,7 @@ export function main(state: State) {
 		precision: store.read("PRECISION"), // decimal precision of displayed values
 	};
 
-	const deposits = state.deposits as Deposit[];
+	const deposits = state.deposits;
 
 	const depositStat = {
 		timestamp: Date.now(),
@@ -28,6 +29,7 @@ export function main(state: State) {
 	} as DepositStat;
 
 	deposits[state.position.id].stats.push(depositStat);
+	// deposit.stats.push(depositStat);
 
 	dom.sync(state);
 	return state;
