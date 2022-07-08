@@ -4,9 +4,9 @@
 	"author": "アレクサンダー.eth <gpg@pavlovcik.com>",
 	"license": "MIT",
 	"scripts": {
-		"ci": "install && npx yarn build",
 		"build": "run-p _build format",
 		"format": "run-s _format:*",
+		"_ci": "run-s _build _build:clean _build:main",
 		"_compile": "parcel build src/index.ts --dist-dir dist",
 		"_format:prettier": "prettier --write .",
 		"_format:eslint": "eslint . --ext .ts,.tsx --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
