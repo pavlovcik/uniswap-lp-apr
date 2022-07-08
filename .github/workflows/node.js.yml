@@ -1,0 +1,43 @@
+name: "pre-release"
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+
+    steps:
+
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: yarn install --frozen-lockfile
+    - run: yarn _ci
+
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        # repo_token**	GitHub Action token, e.g. "${{ secrets.GITHUB_TOKEN }}".	null
+        # draft	Mark this release as a draft?	false
+        # prerelease	Mark this release as a pre-release?	true
+        # automatic_release_tag	Tag name to use for automatic releases, e.g latest.	null
+        # title	Release title; defaults to the tag name if none specified.	Tag Name
+        # files	Files to upload as part of the release assets.	null
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: |
+          dist/closured*
