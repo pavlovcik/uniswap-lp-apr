@@ -4,6 +4,7 @@
 	"author": "アレクサンダー.eth <gpg@pavlovcik.com>",
 	"license": "MIT",
 	"scripts": {
+		"ci": "install && npx yarn build",
 		"build": "run-p _build format",
 		"format": "run-s _format:*",
 		"_compile": "parcel build src/index.ts --dist-dir dist",
