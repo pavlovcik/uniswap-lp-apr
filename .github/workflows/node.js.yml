@@ -3,21 +3,6 @@ name: "pre-release"
 on:
   push:
     branches: [ "*" ]
-
-jobs:
-  pre-release:
-    name: "Pre Release"
-    runs-on: "ubuntu-latest"
-
-    
-# 
-# 
-# 
-name: Node.js CI
-
-on:
-  push:
-    branches: [ "*" ]
   pull_request:
     branches: [ "*" ]
 
