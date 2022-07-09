@@ -29,7 +29,7 @@ Create a bookmarklet with the following "URL" to quickly prototype changes when 
 ```javascript
 javascript: (function () {
 	const script = document.createElement("script");
-	script.setAttribute("src", "http://localhost:8888/closured.js");
+	script.setAttribute("src", "http://localhost:8888/index.js");
 	document.body.appendChild(script);
 })();
 ```
