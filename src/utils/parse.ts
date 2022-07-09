@@ -13,12 +13,11 @@ function parseDateFromUserInput(userInput: string): number {
 	if (!depositTime) {
 		throw new SyntaxError(`Invalid date: ${userInput}`);
 	}
-	// return depositTime;
 	throw new Error(message);
 }
 
 function parseDateFromTheGraph(timestamp: DepositTimeSubGraphResponse): number {
-	const depositTime = parseInt(timestamp?.data?.positions[0]?.transaction?.timestamp?.concat(`000`));
+	const depositTime = parseInt(timestamp?.data?.positions[0]?.transaction?.timestamp?.concat(`000`), 10);
 	if (!depositTime || isNaN(depositTime)) {
 		throw new TypeError("Could not parse timestamp from The Graph");
 	}

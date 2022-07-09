@@ -1,8 +1,21 @@
-import { State } from "../../State";
-export type DepositSources = "theGraph" | "user";
-export type Deposit = { time: number; source: DepositSources };
+import { PositionTiming, PositionValue, PositionYield, State } from "../../State";
+export type DepositSource = "theGraph" | "user";
 
-export function getDepositFromCache(state: State, positionId: number): Deposit | undefined {
-	const depositTime = state.storage[positionId];
-	return depositTime;
+export interface Deposit {
+	time: number;
+	source: DepositSource;
+	stats: DepositStat[];
+}
+export interface DepositStat {
+	timestamp: number;
+	liquidity: PositionValue["liquidity"];
+	fees: PositionValue["fees"];
+	elapsed: PositionTiming["elapsed"];
+	apr: PositionYield["apr"];
+	percentage: PositionYield["percentage"];
+}
+
+export function getDepositFromCache(state: State, positionId: number): Deposit {
+	const deposit = state.deposits[positionId];
+	return deposit;
 }

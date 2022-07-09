@@ -1,12 +1,17 @@
 import { parse } from "../parse";
-import { Deposit } from "./getDepositFromCache";
+import { Deposit, DepositStat } from "./getDepositFromCache";
 
-export function getDepositFromUserInput(): Deposit | undefined {
+export function getDepositFromUserInput(): Deposit {
 	const userInputTime = prompt("Paste the deposit time here");
+	const deposit = {
+		time: -1,
+		source: "user",
+		stats: [] as DepositStat[],
+	} as Deposit;
+
 	if (userInputTime) {
-		return {
-			time: parse.dateFromUserInput(userInputTime),
-			source: "user",
-		};
+		deposit.time = parse.dateFromUserInput(userInputTime);
 	}
+
+	return deposit;
 }

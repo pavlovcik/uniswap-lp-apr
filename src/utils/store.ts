@@ -1,28 +1,33 @@
-import { State } from "../State";
-
 export const store = {
 	write: writeLocalStorage,
 	read: readLocalStorage,
 	initialize: initializeLocalStorage,
 };
 
-function writeLocalStorage(state: State) {
-	localStorage.setItem("APR", JSON.stringify(state.storage));
-}
-function readLocalStorage() {
-	try {
-		const apr = localStorage.getItem("APR");
-		if (apr) {
-			return JSON.parse(apr);
-		} else {
-			throw new Error("No APR found");
-		}
-	} catch (e) {
-		return initializeLocalStorage();
-	}
+function writeLocalStorage(key: string, value: unknown) {
+	window.localStorage.setItem(key, JSON.stringify(value));
 }
 
-function initializeLocalStorage() {
-	localStorage.setItem("APR", "{}");
-	return {};
+function readLocalStorage(key: string) {
+	try {
+		const value = window.localStorage.getItem(key);
+		if (value) {
+			return JSON.parse(value);
+		} else {
+			console.warn(`No "${key}" found in store`);
+		}
+	} catch (e) {
+		console.error(e);
+	}
+	return null;
+}
+
+function initializeLocalStorage(key: string, value: unknown) {
+	const stored = readLocalStorage(key);
+	if (stored) {
+		return stored;
+	} else {
+		writeLocalStorage(key, value);
+		return value;
+	}
 }

@@ -3,5 +3,5 @@ export function getPositionIdFromUrl(): -1 | number {
 	if (!lastNumbersInUrl) {
 		return -1;
 	}
-	return parseInt(lastNumbersInUrl[0]);
+	return parseInt(lastNumbersInUrl[0], 10);
 }

@@ -1,9 +1,9 @@
 import { get } from ".";
 import { main } from "..";
 import { State } from "../../State";
-import { store } from "../store";
-import { updateDomNode } from "../dom/updateDomNode";
+import { dom } from "../dom";
 import { parse } from "../parse";
+import { store } from "../store";
 import { Deposit } from "./getDepositFromCache";
 
 /**
@@ -12,7 +12,7 @@ import { Deposit } from "./getDepositFromCache";
  * If reading from the chain fails, prompt the user to enter the deposit time
  */
 
-export function getDeposit(state: State): Deposit | undefined {
+export function getDeposit(state: State): Deposit | null {
 	const positionId = get.positionIdFromUrl();
 	if (positionId === -1) {
 		state.position.id = positionId;
@@ -22,21 +22,21 @@ export function getDeposit(state: State): Deposit | undefined {
 		state.position.yield.apr = 0;
 		state.position.value.liquidity = 0;
 		state.position.value.fees = 0;
-		updateDomNode(state);
+		dom.sync(state);
 		console.warn("No position id found");
-		return;
+		return null;
 	}
 
-	const depositTime = get.depositFromCache(state, positionId);
-
-	if (depositTime === void 0 || depositTime.source === void 0 || depositTime.source === "user") {
+	const deposit = get.depositFromCache(state, positionId);
+	if (deposit?.source !== "theGraph") {
 		verifyDepositTime(state, positionId);
 	}
 
-	if (!depositTime) {
+	if (!deposit) {
 		console.error("No deposit time found.");
+		return null;
 	} else {
-		return depositTime;
+		return deposit;
 	}
 }
 
@@ -48,25 +48,34 @@ function verifyDepositTime(state: State, positionId: number) {
 				const verifiedDepositTime = parse.dateFromTheGraph(subgraphResponse);
 				if (verifiedDepositTime) {
 					// update the state with the new deposit time
-					(state.storage[positionId] = { source: "theGraph", time: verifiedDepositTime }) as Deposit;
-					return state.storage[positionId];
+					(state.deposits[positionId] = {
+						source: "theGraph",
+						time: verifiedDepositTime,
+						stats: [],
+					}) as Deposit;
+					return state.deposits[positionId];
 				} else {
-					throw new Error("No deposit time found .2");
+					throw new Error("No deposit time found.");
 				}
 			}
 		})
 		.catch((err) => {
 			console.error(err);
-			const userInputDeposit = get.depositFromUserInput();
-			if (userInputDeposit) {
-				state.storage[positionId] = userInputDeposit as Deposit;
-				return state.storage[positionId];
+			if (!state.depositPrompted) {
+				state.depositPrompted = true;
+				const userInputDeposit = get.depositFromUserInput();
+				if (userInputDeposit) {
+					state.deposits[positionId] = userInputDeposit;
+					return state.deposits[positionId];
+				} else {
+					throw new Error("No deposit time found.");
+				}
 			} else {
-				throw new Error("No deposit time found. 3");
+				return;
 			}
 		})
 		.finally(() => {
-			store.write(state);
+			store.write("DEPOSITS", state.deposits);
 			main(state);
 		});
 }

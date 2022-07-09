@@ -1,21 +1,45 @@
 import { State } from "../../State";
+import { ProjectedEarnings } from "./ProjectedEarnings";
+
+const daysInYear = 365.25;
+const hoursInYear = 8760;
+const minutesInYear = 525600;
+const secondsInYear = 31557600;
 
 export function updateDomNode(state: State) {
 	const node = state.domNode;
 	const apr = state.position.yield.apr;
 	const liquidity = state.position.value.liquidity;
-	const annual = apr * liquidity;
-	const daily = ((apr / 365) * liquidity).toFixed(2);
+
+	const earnings = new ProjectedEarnings(apr, liquidity, state.position.precision);
+
+	const yearly = earnings.by(1);
+	const daily = earnings.by(daysInYear);
+	const hourly = earnings.by(hoursInYear);
+	const minutely = earnings.by(minutesInYear);
+	const secondly = earnings.by(secondsInYear);
 
 	if (!node) {
 		throw new Error("No dom node found.");
 	}
 
-	const buffer = [] as string[];
+	let buffer = "";
 
-	if (apr) buffer.push(`${(apr * 100).toFixed(4)}% · APR`);
-	if (apr && liquidity) buffer.push(`$${daily} · Daily`);
-	if (apr && liquidity) buffer.push(`$${annual.toFixed(2)} · Annual`);
+	if (apr) {
+		buffer = buffer.concat(`<ul>`);
+		buffer = buffer.concat(`<li>${(apr * 100).toFixed(4)}% · APR</li>`);
+		if (liquidity) {
+			buffer = buffer.concat(`<li>$${yearly.formatted} · Yearly</li>`);
+			buffer = buffer.concat(`<li>$${daily.formatted} · Daily</li>`);
+			buffer = buffer.concat(`<li>$${hourly.formatted} · Hourly</li>`);
+			buffer = buffer.concat(`<li>$${minutely.formatted} · Minutely</li>`);
+			buffer = buffer.concat(`<li>$${secondly.formatted} · Secondly</li>`);
+		}
+		buffer = buffer.concat(`</ul>`);
+		buffer = buffer.concat(
+			`<p>see more details on <a href="https://revert.ubq.fi/#/uniswap-position/mainnet/${state.position.id}">revert</a></p>`
+		);
+	}
 
 	if (buffer.length) {
 		node.className = "active";
@@ -23,5 +47,6 @@ export function updateDomNode(state: State) {
 		node.className = "";
 	}
 
-	return (node.innerText = buffer.join(`\n`)); // line breaks
+	node.innerHTML = buffer;
+	return buffer;
 }

@@ -1,6 +1,6 @@
 # Uniswap V3 LP Performance HUD
 
-A quick way to monitor the performance of your Uniswap V3 positions. Displays current APR, daily estimated yield ($) and annual estimated yield ($).
+A quick way to monitor the performance of your Uniswap V3 positions. Displays current APR, daily estimated yield and annual estimated yield.
 
 ## Features
 
@@ -20,8 +20,21 @@ A quick way to monitor the performance of your Uniswap V3 positions. Displays cu
 yarn && yarn build
 ```
 
-1. This will copy the compiled code to your clipboard (using MacOS stock `pbcopy`.)
-2. Afterwards make a bookmark and paste the code into the bookmark's URL.
+1. This will export an optimized version to `dist/closured.js` using `google-closure-compiler`
+
+## Bookmarklet
+
+Create a bookmarklet with the following "URL" to quickly prototype changes when using `yarn watch` to build automatically on change.
+
+```javascript
+javascript: (function () {
+	const script = document.createElement("script");
+	script.setAttribute("src", "http://localhost:8888/index.js");
+	document.body.appendChild(script);
+})();
+```
+
+This will expose `closured.js` on localhost for fast prototyping in the browser using `yarn serve`. Just click the bookmarklet to reload!
 
 ## Troubleshooting
 
