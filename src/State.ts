@@ -24,6 +24,7 @@ export class State {
 		yield: { apr: 0, percentage: 0 },
 		precision: store.initialize("PRECISION", 2),
 	} as StatePosition;
+	depositPrompted = false;
 }
 
 export type PositionTiming = {

@@ -23,17 +23,22 @@ export function updateDomNode(state: State) {
 		throw new Error("No dom node found.");
 	}
 
-	const buffer = [] as string[];
+	let buffer = "";
 
 	if (apr) {
-		buffer.push(`${(apr * 100).toFixed(4)}% · APR`);
+		buffer = buffer.concat(`<ul>`);
+		buffer = buffer.concat(`<li>${(apr * 100).toFixed(4)}% · APR</li>`);
 		if (liquidity) {
-			buffer.push(`$${yearly.formatted} · Yearly`);
-			buffer.push(`$${daily.formatted} · Daily`);
-			buffer.push(`$${hourly.formatted} · Hourly`);
-			buffer.push(`$${minutely.formatted} · Minutely`);
-			buffer.push(`$${secondly.formatted} · Secondly`);
+			buffer = buffer.concat(`<li>$${yearly.formatted} · Yearly</li>`);
+			buffer = buffer.concat(`<li>$${daily.formatted} · Daily</li>`);
+			buffer = buffer.concat(`<li>$${hourly.formatted} · Hourly</li>`);
+			buffer = buffer.concat(`<li>$${minutely.formatted} · Minutely</li>`);
+			buffer = buffer.concat(`<li>$${secondly.formatted} · Secondly</li>`);
 		}
+		buffer = buffer.concat(`</ul>`);
+		buffer = buffer.concat(
+			`<p>see more details on <a href="https://revert.ubq.fi/#/uniswap-position/mainnet/${state.position.id}">revert</a></p>`
+		);
 	}
 
 	if (buffer.length) {
@@ -42,5 +47,6 @@ export function updateDomNode(state: State) {
 		node.className = "";
 	}
 
-	return (node.innerText = buffer.join(`\n`)); // line breaks
+	node.innerHTML = buffer;
+	return buffer;
 }

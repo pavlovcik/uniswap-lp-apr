@@ -61,12 +61,17 @@ function verifyDepositTime(state: State, positionId: number) {
 		})
 		.catch((err) => {
 			console.error(err);
-			const userInputDeposit = get.depositFromUserInput();
-			if (userInputDeposit) {
-				state.deposits[positionId] = userInputDeposit;
-				return state.deposits[positionId];
+			if (!state.depositPrompted) {
+				state.depositPrompted = true;
+				const userInputDeposit = get.depositFromUserInput();
+				if (userInputDeposit) {
+					state.deposits[positionId] = userInputDeposit;
+					return state.deposits[positionId];
+				} else {
+					throw new Error("No deposit time found.");
+				}
 			} else {
-				throw new Error("No deposit time found.");
+				return;
 			}
 		})
 		.finally(() => {

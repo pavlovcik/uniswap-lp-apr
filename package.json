@@ -1,6 +1,6 @@
 {
 	"name": "uniswap-lp-bookmarklet",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"author": "アレクサンダー.eth <gpg@pavlovcik.com>",
 	"license": "MIT",
 	"scripts": {

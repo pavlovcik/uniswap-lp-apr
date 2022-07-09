@@ -49,6 +49,12 @@ const CSS_TEXT = `
 	}
 }
 
+#uniswap-apr ul {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+}
+
 `;
 
 export function setupDomNode() {
