@@ -5,12 +5,12 @@ export const store = {
 };
 
 function writeLocalStorage(key: string, value: unknown) {
-	localStorage.setItem(key, JSON.stringify(value));
+	window.localStorage.setItem(key, JSON.stringify(value));
 }
 
 function readLocalStorage(key: string) {
 	try {
-		const value = localStorage.getItem(key);
+		const value = window.localStorage.getItem(key);
 		if (value) {
 			return JSON.parse(value);
 		} else {
