@@ -27,7 +27,11 @@ yarn && yarn build
 Create a bookmarklet with the following "URL" to quickly prototype changes when using `yarn watch` to build automatically on change.
 
 ```javascript
-javascript:(function () { const script = document.createElement("script"); script.setAttribute('src', 'http://localhost:8888/closured.js'); document.body.appendChild(script); })();
+javascript: (function () {
+	const script = document.createElement("script");
+	script.setAttribute("src", "http://localhost:8888/closured.js");
+	document.body.appendChild(script);
+})();
 ```
 
 This will expose `closured.js` on localhost for fast prototyping in the browser using `yarn serve`. Just click the bookmarklet to reload!
