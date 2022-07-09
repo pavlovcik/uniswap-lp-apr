@@ -1,4 +1,4 @@
-import { State, StatePosition } from "../../State";
+import { PositionYield, State, StatePosition, PositionTiming, PositionValue } from '../../State';
 export type DepositSource = "theGraph" | "user";
 
 export interface Deposit {
@@ -8,7 +8,11 @@ export interface Deposit {
 }
 export interface DepositStat {
 	timestamp: number;
-	position: StatePosition;
+	liquidity: PositionValue["liquidity"];
+	fees: PositionValue["fees"];
+	elapsed: PositionTiming["elapsed"];
+	apr: PositionYield["apr"];
+	percentage: PositionYield["percentage"];
 }
 
 export function getDepositFromCache(state: State, positionId: number): Deposit {
