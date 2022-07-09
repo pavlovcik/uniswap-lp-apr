@@ -1,4 +1,4 @@
-import { PositionYield, State, StatePosition, PositionTiming, PositionValue } from '../../State';
+import { PositionTiming, PositionValue, PositionYield, State } from "../../State";
 export type DepositSource = "theGraph" | "user";
 
 export interface Deposit {
