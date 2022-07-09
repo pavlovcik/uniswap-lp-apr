@@ -12,9 +12,7 @@ export function main(state: State) {
 
 	const timings = calculate.timings(deposit);
 
-	let { position } = state;
-
-	position = {
+	state.position = {
 		id: get.positionIdFromUrl(), // -1 if not found,
 		value: get.positionValue(),
 		time: timings,
@@ -22,13 +20,15 @@ export function main(state: State) {
 		precision: store.read("PRECISION"), // decimal precision of displayed values
 	};
 
-	state.deposits[position.id].stats.push({
+	console.trace(JSON.stringify(state.position, null, "\t"));
+
+	state.deposits[state.position.id].stats.push({
 		timestamp: Date.now(),
-		liquidity: position.value.liquidity,
-		fees: position.value.fees,
-		elapsed: position.time.elapsed,
-		apr: position.yield.apr,
-		percentage: position.yield.percentage,
+		liquidity: state.position.value.liquidity,
+		fees: state.position.value.fees,
+		elapsed: state.position.time.elapsed,
+		apr: state.position.yield.apr,
+		percentage: state.position.yield.percentage,
 	});
 
 	dom.sync(state);
