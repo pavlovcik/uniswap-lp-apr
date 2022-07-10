@@ -4,6 +4,11 @@ import { State } from "./State";
 import { main } from "./utils";
 import { dom } from "./utils/dom";
 
+if (window.state) {
+	// a previous instance exists
+	window.state.domNode.parentElement?.removeChild(window.state.domNode);
+}
+
 const state = (window.state = new State());
 
 dom.attachMutationObserver(state); // just once
