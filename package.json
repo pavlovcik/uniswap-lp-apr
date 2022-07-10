@@ -20,6 +20,7 @@
 		"_watch": "yarn nodemon --ignore dist --exec 'yarn build'"
 	},
 	"dependencies": {
+		"@metamask/providers": "^9.0.0",
 		"google-closure-compiler": "^20220104.0.0",
 		"node-static": "^0.7.11",
 		"nodemon": "^2.0.15",

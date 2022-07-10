@@ -2,11 +2,12 @@ import { State } from "../State";
 import { calculate } from "./calculate";
 import { dom } from "./dom";
 import { get } from "./get";
-import { DepositStat } from "./get/getDepositFromCache";
+import { DepositAnalytic } from "./get/getDepositFromCache";
 import { store } from "./store";
 
-export function main(state: State) {
-	const deposit = get.deposit(state);
+export async function main(state: State) {
+	const deposit = await get.deposit(state);
+	console.trace(deposit);
 	if (!deposit) {
 		return;
 	}
@@ -21,7 +22,7 @@ export function main(state: State) {
 		precision: store.read("PRECISION"), // decimal precision of displayed values
 	};
 
-	const stats = state.deposits[state.position.id].stats || ([] as DepositStat[]);
+	const stats = state.deposits[state.position.id].analytics || ([] as DepositAnalytic[]);
 
 	stats.push({
 		timestamp: Date.now(),
@@ -32,7 +33,7 @@ export function main(state: State) {
 		percentage: state.position.yield.percentage,
 	});
 
-	state.deposits[state.position.id].stats = stats.filter(
+	state.deposits[state.position.id].analytics = stats.filter(
 		(v, i, a) => a.findIndex((v2) => JSON.stringify(v2) === JSON.stringify(v)) === i
 	);
 

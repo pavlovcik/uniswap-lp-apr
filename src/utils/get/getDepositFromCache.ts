@@ -1,12 +1,17 @@
 import { PositionTiming, PositionValue, PositionYield, State } from "../../State";
-export type DepositSource = "theGraph" | "user";
+export type DepositOracle = "theGraph" | "user" | "none";
 
-export interface Deposit {
+export class Deposit {
 	time: number;
-	source: DepositSource;
-	stats: DepositStat[];
+	oracle: DepositOracle;
+	analytics: DepositAnalytic[];
+	constructor({ time, oracle, analytics }) {
+		this.time = time;
+		this.oracle = oracle;
+		this.analytics = analytics;
+	}
 }
-export interface DepositStat {
+export interface DepositAnalytic {
 	timestamp: number;
 	liquidity: PositionValue["liquidity"];
 	fees: PositionValue["fees"];
@@ -15,7 +20,10 @@ export interface DepositStat {
 	percentage: PositionYield["percentage"];
 }
 
-export function getDepositFromCache(state: State, positionId: number): Deposit {
-	const deposit = state.deposits[positionId];
+export function getDepositFromCache(state: State, positionId: number) {
+	const deposit = state.deposits[positionId] as Deposit | undefined;
+	if (!deposit) {
+		console.warn(`no deposit found in cache`);
+	}
 	return deposit;
 }
