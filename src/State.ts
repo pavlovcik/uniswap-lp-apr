@@ -11,7 +11,7 @@ const ignoreError = (callback) => {
 	}
 };
 export interface Deposits {
-	[id: string]: Deposit;
+	[id: number]: Deposit;
 }
 export class State {
 	deposits = store.initialize("DEPOSITS", {}) as Deposits;

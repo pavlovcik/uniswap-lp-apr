@@ -7,7 +7,7 @@ import { store } from "./store";
 
 export async function main(state: State) {
 	const deposit = await get.deposit(state);
-	console.trace(deposit);
+	console.trace(deposit?.analytics);
 	if (!deposit) {
 		return;
 	}

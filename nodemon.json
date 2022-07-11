@@ -11,5 +11,6 @@
         "restart": "clear && printf '\\033[3J'",
         "start": "clear && printf '\\033[3J'"
     },
-    "exec": "yarn _build:main"
+    "exec": "yarn _build:main",
+    "ext": "js,json,ts"
 }
