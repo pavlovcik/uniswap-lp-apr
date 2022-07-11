@@ -70,6 +70,10 @@ svg[class^=plot] {
     display: inline-block;
 }
 
+#uniswap-apr-plotter {
+    text-align: center;
+}
+
 `;
 
 export function setupDomNode() {

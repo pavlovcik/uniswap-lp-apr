@@ -4,10 +4,11 @@ import { State } from "../../State";
 export function charting(state: State) {
 	const analytics = state.deposits[state.position.id].analytics;
 	const parent = document.body;
+
 	if (state.plot) {
-		parent?.removeChild(state.plot);
+		parent.removeChild(state.plot);
 	}
-	state.plot = Plot.plot({
+	const plotSvg = Plot.plot({
 		grid: true,
 		marks: [
 			Plot.dot(analytics, {
@@ -26,9 +27,13 @@ export function charting(state: State) {
 			percent: true,
 		},
 		x: {
-			type: "utc",
-			sort: "timestamp",
+			type: "time",
+			// sort: "timestamp",
 		},
 	});
-	parent?.append(state.plot);
+	const div = document.createElement(`div`);
+	div.id = "uniswap-apr-plotter";
+	div.appendChild(plotSvg);
+	state.plot = div;
+	parent.append(div);
 }
