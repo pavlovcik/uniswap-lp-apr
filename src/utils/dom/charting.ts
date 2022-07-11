@@ -8,27 +8,26 @@ export function charting(state: State) {
 	if (state.plot) {
 		parent.removeChild(state.plot);
 	}
+
+	const dot = { x: "elapsed", y: "apr", r: 1, strokeOpacity: 0.5 };
+	const line = { x: "elapsed", y: "apr", strokeOpacity: 0.25 };
+
 	const plotSvg = Plot.plot({
 		grid: true,
-		marks: [
-			Plot.dot(analytics, {
-				x: "elapsed",
-				y: "apr",
-				r: 1,
-				strokeOpacity: 0.5,
-			}),
-			Plot.line(analytics, {
-				x: "elapsed",
-				y: "apr",
-				strokeOpacity: 0.25,
-			}),
-		],
+		marks: [Plot.dot(analytics, dot), Plot.line(analytics, line)],
 		y: {
 			percent: true,
 		},
 		x: {
 			type: "time",
-			// sort: "timestamp",
+			transform: function bumpForwardSixHours(timestamp: string) {
+				// I have no idea why the times are behind by six hours,
+				// so here is a dirty fix
+				const date = new Date(timestamp);
+				const numOfHours = 6;
+				date.setTime(date.getTime() + numOfHours * 60 * 60 * 1000);
+				return date.getTime();
+			},
 		},
 	});
 	const div = document.createElement(`div`);

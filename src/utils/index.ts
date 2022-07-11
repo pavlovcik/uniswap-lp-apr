@@ -8,7 +8,7 @@ import outliers from "outliers";
 
 export async function main(state: State) {
 	const deposit = await get.deposit(state);
-	console.table(deposit?.analytics);
+	// console.table(deposit?.analytics);
 	if (!deposit) {
 		return;
 	}
