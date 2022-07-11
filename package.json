@@ -7,6 +7,7 @@
 		"build": "run-p _build format",
 		"format": "run-s _format:*",
 		"serve": "static dist --port 8888",
+		"_watch": "nodemon --verbose",
 		"_ci": "run-s _build:main",
 		"_compile": "parcel build src/index.ts --dist-dir dist",
 		"_format:prettier": "prettier --write .",
@@ -15,8 +16,7 @@
 		"_build": "run-s _build:*",
 		"_build:clean": "rimraf dist .parcel-cache",
 		"_build:main": "run-s _compile _optimize",
-		"_optimize": "./utils/closure-compiler.sh",
-		"_watch": "yarn nodemon --ignore dist/ --exec 'yarn build'"
+		"_optimize": "./utils/closure-compiler.sh"
 	},
 	"dependencies": {
 		"@metamask/providers": "^9.0.0",
