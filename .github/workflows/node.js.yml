@@ -1,18 +1,14 @@
-name: "pre-release"
+name: "build"
 
 on:
     push:
-        # branches: ["*"]
+    # branches: ["*"]
     pull_request:
         # branches: ["*"]
 
 jobs:
     build:
         runs-on: ubuntu-latest
-
-        strategy:
-            matrix:
-                node-version: [16.x]
 
         steps:
             - uses: actions/checkout@v3
@@ -21,8 +17,9 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
-            - run: yarn install --frozen-lockfile
-            - run: yarn _ci
+            - run: |
+                  yarn install --frozen-lockfile
+                  yarn _ci
 
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:

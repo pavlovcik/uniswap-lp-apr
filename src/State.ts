@@ -1,7 +1,7 @@
 import { dom } from "./utils/dom";
 import { get } from "./utils/get";
-import { store } from "./utils/store";
 import { Deposit } from "./utils/get/getDepositFromCache";
+import { store } from "./utils/store";
 
 const ignoreError = (callback) => {
 	try {
@@ -11,12 +11,12 @@ const ignoreError = (callback) => {
 	}
 };
 export interface Deposits {
-	[id: string]: Deposit;
+	[id: number]: Deposit;
 }
 export class State {
 	deposits = store.initialize("DEPOSITS", {}) as Deposits;
 	domNode = dom.setupDomNode();
-	observerAttached = false;
+	observer: MutationObserver | null = null;
 	position = {
 		id: ignoreError(get.positionIdFromUrl),
 		value: ignoreError(get.positionValue),

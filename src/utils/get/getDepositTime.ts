@@ -1,10 +1,14 @@
-import { get } from ".";
-import { main } from "..";
+// import { get } from ".";
+import {
+	Deposit,
+	getDepositFromCache,
+	getDepositTimeFromSubgraph,
+	getDepositTimeFromUserInput,
+	getPositionIdFromUrl,
+} from ".";
 import { State } from "../../State";
-import { dom } from "../dom";
 import { parse } from "../parse";
 import { store } from "../store";
-import { Deposit } from "./getDepositFromCache";
 
 /**
  * This should read from the LocalStorage cache first,
@@ -12,70 +16,58 @@ import { Deposit } from "./getDepositFromCache";
  * If reading from the chain fails, prompt the user to enter the deposit time
  */
 
-export function getDeposit(state: State): Deposit | null {
-	const positionId = get.positionIdFromUrl();
+export async function getDeposit(state: State): Promise<Deposit | null> {
+	const positionId = getPositionIdFromUrl();
 	if (positionId === -1) {
-		state.position.id = positionId;
-		state.position.time.deposit = 0;
-		state.position.time.elapsed = 0;
-		state.position.yield.percentage = 0;
-		state.position.yield.apr = 0;
-		state.position.value.liquidity = 0;
-		state.position.value.fees = 0;
-		dom.sync(state);
-		console.warn("No position id found");
+		console.error("No position id found");
 		return null;
 	}
 
-	const deposit = get.depositFromCache(state, positionId);
-	if (deposit?.source !== "theGraph") {
-		verifyDepositTime(state, positionId);
-	}
-
+	let deposit = getDepositFromCache(state, positionId);
 	if (!deposit) {
-		console.error("No deposit time found.");
-		return null;
-	} else {
-		return deposit;
+		// initialize a new deposit
+		deposit = state.deposits[positionId] = new Deposit({
+			time: -1,
+			oracle: "none",
+			analytics: [],
+		});
 	}
+
+	// the only scenario we should not check for the deposit time again is if
+	// the cached data is: 1. found and 2. is from theGraph
+	if (deposit.oracle !== "theGraph") {
+		await getDepositTime(state, positionId);
+	}
+
+	return deposit;
 }
 
-function verifyDepositTime(state: State, positionId: number) {
-	return get
-		.depositTimeFromSubgraph(positionId)
-		.then((subgraphResponse) => {
-			if (subgraphResponse) {
-				const verifiedDepositTime = parse.dateFromTheGraph(subgraphResponse);
-				if (verifiedDepositTime) {
-					// update the state with the new deposit time
-					(state.deposits[positionId] = {
-						source: "theGraph",
-						time: verifiedDepositTime,
-						stats: [],
-					}) as Deposit;
-					return state.deposits[positionId];
-				} else {
-					throw new Error("No deposit time found.");
-				}
+async function getDepositTime(state: State, positionId: number): Promise<void> {
+	try {
+		// throw new Error(`testing manual user input`);
+		// Fetch deposit time from the graph based on the position ID
+		const subgraphResponse = await getDepositTimeFromSubgraph(positionId);
+		if (subgraphResponse) {
+			state.deposits[positionId].oracle = "theGraph";
+			state.deposits[positionId].time = parse.dateFromTheGraph(subgraphResponse);
+		}
+	} catch (error) {
+		// Fallback to user input
+		console.error(error);
+		// FIXME: make a nicer storage schema
+		state.depositPrompted = true;
+
+		const userInputTransactionHash = prompt("Paste deposit transaction hash here");
+		if (userInputTransactionHash) {
+			const userInputDepositTime = await getDepositTimeFromUserInput(userInputTransactionHash);
+			if (userInputDepositTime) {
+				state.deposits[positionId].oracle = "user";
+				state.deposits[positionId].time = userInputDepositTime;
 			}
-		})
-		.catch((err) => {
-			console.error(err);
-			if (!state.depositPrompted) {
-				state.depositPrompted = true;
-				const userInputDeposit = get.depositFromUserInput();
-				if (userInputDeposit) {
-					state.deposits[positionId] = userInputDeposit;
-					return state.deposits[positionId];
-				} else {
-					throw new Error("No deposit time found.");
-				}
-			} else {
-				return;
-			}
-		})
-		.finally(() => {
-			store.write("DEPOSITS", state.deposits);
-			main(state);
-		});
+		} else {
+			throw new Error("no user input transaction hash, can not determine deposit time");
+		}
+	}
+
+	store.write("DEPOSITS", state.deposits);
 }

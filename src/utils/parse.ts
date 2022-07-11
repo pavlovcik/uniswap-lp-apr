@@ -5,15 +5,12 @@ export const parse = {
 	dateFromTheGraph: parseDateFromTheGraph,
 };
 
-function parseDateFromUserInput(userInput: string): number {
-	const message = `Need to verify that the timezone math is implemented correctly here`;
-	alert(message);
+function parseDateFromUserInput(userInput: string) {
 	const userInputDate = new Date(userInput);
 	const depositTime = userInputDate.getTime();
 	if (!depositTime) {
 		throw new SyntaxError(`Invalid date: ${userInput}`);
 	}
-	throw new Error(message);
 }
 
 function parseDateFromTheGraph(timestamp: DepositTimeSubGraphResponse): number {
