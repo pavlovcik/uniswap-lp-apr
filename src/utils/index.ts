@@ -33,9 +33,10 @@ export async function main(state: State) {
 		percentage: state.position.yield.percentage,
 	});
 
-	state.deposits[state.position.id].analytics = stats.filter(
-		(v, i, a) => a.findIndex((v2) => JSON.stringify(v2) === JSON.stringify(v)) === i
-	);
+	// filter by liquidity amount
+	state.deposits[state.position.id].analytics = [
+		...new Map(state.deposits[state.position.id].analytics.map((v) => [v.liquidity, v])).values(),
+	];
 
 	store.write("DEPOSITS", state.deposits);
 
