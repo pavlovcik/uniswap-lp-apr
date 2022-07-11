@@ -4,16 +4,10 @@ export async function getDepositTimeFromUserInput(userInputTransactionHash: stri
 		params: [userInputTransactionHash],
 	})) as Transaction;
 
-	// console.log(JSON.stringify(transaction));
-	// console.log(transaction.blockNumber);
-
 	const block = (await window.ethereum.request({
 		method: "eth_getBlockByNumber",
 		params: [transaction.blockNumber, false],
 	})) as Block;
-
-	// console.log(JSON.stringify(block));
-	// console.log(block);
 
 	return parseInt(block.timestamp, 16) * 1000; //  * 1000 seems dirty but works
 }

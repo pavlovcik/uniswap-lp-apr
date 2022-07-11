@@ -25,6 +25,7 @@ export class State {
 		precision: store.initialize("PRECISION", 2),
 	} as StatePosition;
 	depositPrompted = false;
+	plot!: HTMLElement;
 }
 
 export type PositionTiming = {

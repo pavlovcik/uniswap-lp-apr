@@ -20,6 +20,8 @@
 	},
 	"dependencies": {
 		"@metamask/providers": "^9.0.0",
+		"@observablehq/plot": "^0.5.2",
+		"@types/": "observablehq/plot",
 		"google-closure-compiler": "^20220104.0.0",
 		"node-static": "^0.7.11",
 		"nodemon": "^2.0.15",

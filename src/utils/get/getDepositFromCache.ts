@@ -22,8 +22,8 @@ export interface DepositAnalytic {
 
 export function getDepositFromCache(state: State, positionId: number) {
 	const deposit = state.deposits[positionId] as Deposit | undefined;
-	if (!deposit) {
-		console.warn(`no deposit found in cache`);
-	}
+	// if (!deposit) {
+	// 	console.warn(`no deposit found in cache`);
+	// }
 	return deposit;
 }
