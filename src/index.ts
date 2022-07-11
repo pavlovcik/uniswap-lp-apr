@@ -5,8 +5,9 @@ import { main } from "./utils";
 import { dom } from "./utils/dom";
 
 if (window.state) {
-	// a previous instance exists
+	// a previous instance exists, so remove it
 	window.state.domNode.parentElement?.removeChild(window.state.domNode);
+	delete window.state;
 }
 
 const state = (window.state = new State());
@@ -20,7 +21,7 @@ main(state).finally(() => {
 
 declare global {
 	interface Window {
-		state: State;
+		state?: State;
 		ethereum: MetaMaskInpageProvider;
 		Web3: never;
 		web3: never;
