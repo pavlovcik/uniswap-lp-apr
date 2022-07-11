@@ -3,4 +3,4 @@ node_modules
 .parcel-cache
 dist
 .eslintcache
-tsconfig.tsbuildinfo
+lib
