@@ -17,9 +17,8 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
                   cache: "npm"
-            - run: |
-                  yarn install --frozen-lockfile
-                  yarn _ci
+            - run: yarn install --frozen-lockfile
+            - run: yarn _ci
 
             - uses: "marvinpinto/action-automatic-releases@latest"
               with:
