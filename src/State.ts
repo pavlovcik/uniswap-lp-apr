@@ -16,7 +16,7 @@ export interface Deposits {
 export class State {
 	deposits = store.initialize("DEPOSITS", {}) as Deposits;
 	domNode = dom.setupDomNode();
-	observerAttached = false;
+	observer: MutationObserver | null = null;
 	position = {
 		id: ignoreError(get.positionIdFromUrl),
 		value: ignoreError(get.positionValue),

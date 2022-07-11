@@ -60,19 +60,14 @@ async function getDepositTime(state: State, positionId: number): Promise<void> {
 		const userInputTransactionHash = prompt("Paste deposit transaction hash here");
 		if (userInputTransactionHash) {
 			const userInputDepositTime = await getDepositTimeFromUserInput(userInputTransactionHash);
-			// console.trace(userInputDepositTime);
 			if (userInputDepositTime) {
 				state.deposits[positionId].oracle = "user";
 				state.deposits[positionId].time = userInputDepositTime;
-				// console.trace(state.deposits[positionId]);
 			}
 		} else {
 			throw new Error("no user input transaction hash, can not determine deposit time");
 		}
 	}
 
-	// console.trace(state.deposits);
 	store.write("DEPOSITS", state.deposits);
-	// console.trace(state.deposits);
-	// await main(state);
 }

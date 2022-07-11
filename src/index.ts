@@ -6,6 +6,7 @@ import { dom } from "./utils/dom";
 
 if (window.state) {
 	// a previous instance exists, so remove it
+	window.state.observer?.disconnect();
 	window.state.domNode.parentElement?.removeChild(window.state.domNode);
 	delete window.state;
 }

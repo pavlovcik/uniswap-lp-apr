@@ -2,9 +2,7 @@ import { main } from "..";
 import { State } from "../../State";
 
 export function attachMutationObserver(state: State) {
-	if (!state.observerAttached) {
-		state.observerAttached = true;
-	} else {
+	if (state.observer) {
 		throw new Error("Mutation observer already attached.");
 	}
 
@@ -19,4 +17,5 @@ export function attachMutationObserver(state: State) {
 			main(state);
 		}
 	}
+	state.observer = observer;
 }
