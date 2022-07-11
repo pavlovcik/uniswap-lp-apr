@@ -10,9 +10,12 @@ A quick way to monitor the performance of your Uniswap V3 positions. Displays cu
     -   Saves deposit time to local storage.
     -   HUD updates when Uniswap "Unclaimed fees" updates, which is useful when a position is young.
 
-## Screenshot
+## Screenshot Gallery
 
 ![image](https://user-images.githubusercontent.com/4975670/152696785-2efd1fa6-6b20-4295-9dd6-60c6ad82cd4a.png)
+![image](https://user-images.githubusercontent.com/4975670/178243981-df728b5e-3f24-46b9-8552-a2ad0a763968.png)
+Currently experimenting with capturing data from the DOM and live plotting the APR performance. 
+
 
 ## Installation
 
