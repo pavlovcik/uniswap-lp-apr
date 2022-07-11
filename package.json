@@ -11,12 +11,11 @@
 		"_compile": "parcel build src/index.ts --dist-dir dist",
 		"_format:prettier": "prettier --write .",
 		"_format:eslint": "eslint . --ext .ts,.tsx --cache --fix --plugin tsc --rule 'tsc/config: [2, {configFile: \"./tsconfig.json\"}]'",
-		"_format:typecheck": "tsc --noEmit",
+		"_format:typechecks": "tsc --noEmit",
 		"_build": "run-s _build:*",
 		"_build:clean": "rimraf dist .parcel-cache",
-		"_build:main": "run-s _compile _optimize _prepend",
+		"_build:main": "run-s _compile _optimize",
 		"_optimize": "google-closure-compiler --compilation_level ADVANCED --js dist/index.js --create_source_map ./dist/closured-map --js_output_file dist/closured.js",
-		"_prepend": "ts-node scripts/append-javascript.ts dist/closured.js",
 		"_watch": "yarn nodemon --ignore dist --exec 'yarn build'"
 	},
 	"dependencies": {

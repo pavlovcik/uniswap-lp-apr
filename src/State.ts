@@ -1,7 +1,7 @@
 import { dom } from "./utils/dom";
 import { get } from "./utils/get";
-import { store } from "./utils/store";
 import { Deposit } from "./utils/get/getDepositFromCache";
+import { store } from "./utils/store";
 
 const ignoreError = (callback) => {
 	try {
