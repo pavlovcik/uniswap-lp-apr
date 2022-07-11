@@ -4,6 +4,7 @@ import { dom } from "./dom";
 import { get } from "./get";
 import { DepositAnalytic } from "./get/getDepositFromCache";
 import { store } from "./store";
+import outliers from "outliers";
 
 export async function main(state: State) {
 	const deposit = await get.deposit(state);
@@ -37,6 +38,9 @@ export async function main(state: State) {
 	state.deposits[state.position.id].analytics = [
 		...new Map(state.deposits[state.position.id].analytics.map((v) => [v.liquidity, v])).values(),
 	];
+
+	// remove APR outliers
+	state.deposits[state.position.id].analytics = state.deposits[state.position.id].analytics.filter(outliers("apr"));
 
 	store.write("DEPOSITS", state.deposits);
 
