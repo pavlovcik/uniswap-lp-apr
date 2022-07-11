@@ -15,8 +15,8 @@
 		"_build": "run-s _build:*",
 		"_build:clean": "rimraf dist .parcel-cache",
 		"_build:main": "run-s _compile _optimize",
-		"_optimize": "google-closure-compiler --compilation_level ADVANCED --js dist/index.js --create_source_map ./dist/closured-map --js_output_file dist/closured.js",
-		"_watch": "yarn nodemon --ignore dist --exec 'yarn build'"
+		"_optimize": "./utils/closure-compiler.sh",
+		"_watch": "yarn nodemon --ignore dist/ --exec 'yarn build'"
 	},
 	"dependencies": {
 		"@metamask/providers": "^9.0.0",
