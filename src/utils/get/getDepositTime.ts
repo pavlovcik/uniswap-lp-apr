@@ -7,7 +7,6 @@ import {
 	getPositionIdFromUrl,
 } from ".";
 import { State } from "../../State";
-import { dom } from "../dom";
 import { parse } from "../parse";
 import { store } from "../store";
 
@@ -20,8 +19,6 @@ import { store } from "../store";
 export async function getDeposit(state: State): Promise<Deposit | null> {
 	const positionId = getPositionIdFromUrl();
 	if (positionId === -1) {
-		initialize(state, positionId);
-		dom.sync(state);
 		console.error("No position id found");
 		return null;
 	}
@@ -43,16 +40,6 @@ export async function getDeposit(state: State): Promise<Deposit | null> {
 	}
 
 	return deposit;
-}
-
-function initialize(state: State, positionId: number) {
-	state.position.id = positionId;
-	state.position.time.deposit = 0;
-	state.position.time.elapsed = 0;
-	state.position.yield.percentage = 0;
-	state.position.yield.apr = 0;
-	state.position.value.liquidity = 0;
-	state.position.value.fees = 0;
 }
 
 async function getDepositTime(state: State, positionId: number): Promise<void> {
