@@ -55,6 +55,21 @@ const CSS_TEXT = `
     margin: 0;
 }
 
+svg[class^=plot] {
+    background: rgb(33, 36, 41);
+    border-color: rgb(25, 27, 31);
+    color: white;
+    border-width: 2px;
+    border-style: solid;
+    font-weight: 500;
+    background-color: rgb(25, 27, 31);
+    padding: 1rem;
+    border-radius: 16px;
+    width: calc( 100% - 32px);
+    max-width: 960px;
+    display: inline-block;
+}
+
 `;
 
 export function setupDomNode() {

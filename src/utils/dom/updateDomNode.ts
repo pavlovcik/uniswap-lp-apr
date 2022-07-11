@@ -37,7 +37,7 @@ export function updateDomNode(state: State) {
 		}
 		buffer = buffer.concat(`</ul>`);
 		buffer = buffer.concat(
-			`<p>see more details on <a href="https://revert.ubq.fi/#/uniswap-position/mainnet/${state.position.id}">revert</a></p>`
+			`<p><a href="https://revert.ubq.fi/#/uniswap-position/mainnet/${state.position.id}">see more details</a></p>`
 		);
 	}
 

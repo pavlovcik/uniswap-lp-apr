@@ -16,7 +16,7 @@
 		"_build": "run-s _build:*",
 		"_build:clean": "rimraf dist .parcel-cache",
 		"_build:main": "run-s _compile _optimize",
-		"_optimize": "./utils/closure-compiler.sh"
+		"_optimize": "google-closure-compiler --flagfile flagfile.conf"
 	},
 	"dependencies": {
 		"@metamask/providers": "^9.0.0",

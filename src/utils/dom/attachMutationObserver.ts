@@ -2,7 +2,6 @@ import * as Plot from "@observablehq/plot";
 import { main } from "..";
 import { State } from "../../State";
 
-
 export function attachMutationObserver(state: State) {
 	if (state.observer) {
 		throw new Error("Mutation observer already attached.");
@@ -24,28 +23,26 @@ export function attachMutationObserver(state: State) {
 
 function programLoop(state: State) {
 	const analytics = state.deposits[state.position.id].analytics;
-	const parent = state.domNode.parentElement;
+	const parent = document.body;
 	if (state.plot) {
 		parent?.removeChild(state.plot);
 	}
 	state.plot = Plot.plot({
-		style: {
-			background: "black",
-			color: "white",
-		},
+		grid: true,
+		style: {},
+		marks: [
+			Plot.line(analytics, {
+				x: "elapsed",
+				y: "apr",
+			}),
+		],
 		y: {
-			grid: true,
-			// transform: (apr: PositionYield["apr"]) => (apr * 100).toString().concat("%"),
+			percent: true,
 		},
-
 		x: {
-			grid: true,
-			// label: "",
-			// label: "↑ Temperature (°F)",
-			// transform: (timestamp: PositionTiming["elapsed"]) => new Date(timestamp).toString(),
+			type: "time",
+			sort: "timestamp",
 		},
-
-		marks: [Plot.line(analytics, { x: "elapsed", y: "apr" })],
 	});
 	parent?.append(state.plot);
 	main(state);
