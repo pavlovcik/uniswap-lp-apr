@@ -14,10 +14,27 @@ A quick way to monitor the performance of your Uniswap V3 positions. Displays cu
 
 ![image](https://user-images.githubusercontent.com/4975670/152696785-2efd1fa6-6b20-4295-9dd6-60c6ad82cd4a.png)
 ![image](https://user-images.githubusercontent.com/4975670/178243981-df728b5e-3f24-46b9-8552-a2ad0a763968.png)
-Currently experimenting with capturing data from the DOM and live plotting the APR performance. 
-
+Currently experimenting with capturing data from the DOM and live plotting the APR performance.
 
 ## Installation
+
+### For Users
+
+1. Create a new bookmark in your browser.
+2. You can name it anything you want.
+3. In the URL field, paste the below code.
+4. Save and press the bookmark when you're viewing your position.
+
+```javascript
+javascript: (() => {
+	const script = document.createElement("script");
+	script.setAttribute("src", "https://github.com/pavlovcik/uniswap-lp-apr/releases/download/latest/index.js");
+	document.body.appendChild(script);
+})();
+```
+That's it!
+
+### For Developers
 
 ```shell
 yarn && yarn build
