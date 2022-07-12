@@ -32,7 +32,7 @@ export class State {
 	}
 }
 
-function ignoreError(callback) {
+function ignoreError(callback: () => PositionValue | number) {
 	try {
 		return callback();
 	} catch (error) {

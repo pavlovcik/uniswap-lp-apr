@@ -1,9 +1,9 @@
-import outliers from "outliers";
 import { State } from "../State";
 import { calculate } from "./calculate";
 import { syncDom } from "./dom";
 import { getDeposit, getPositionIdFromUrl, getPositionValue } from "./get";
 import { DepositAnalytic } from "./get/getDepositFromCache";
+import outliers from "outliers";
 import { store } from "./store";
 
 export async function main(state: State) {

@@ -17,8 +17,6 @@ export function attachMutationObserver(state: State) {
 			programLoop(state);
 		}
 	}
-	// state.observer = observer;
-	// programLoop(state);
 	return observer;
 }
 
