@@ -34,6 +34,9 @@ export async function main(state: State) {
 		percentage: state.position.yield.percentage,
 	});
 
+	// eslint-disable-next-line no-debugger
+	debugger;
+
 	// filter by liquidity amount
 	state.deposits[state.position.id].analytics = [
 		...new Map(state.deposits[state.position.id].analytics?.map((v) => [v.liquidity, v])).values(),

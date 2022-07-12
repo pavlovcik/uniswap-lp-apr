@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "run-p _build format",
 		"format": "run-s _format:*",
-		"serve": "static dist --port 8888",
+		"serve": "parcel src/index.ts --port 8888",
 		"_watch": "nodemon --verbose",
 		"_ci": "run-s _build:main",
 		"_compile": "parcel build src/index.ts --dist-dir dist",
