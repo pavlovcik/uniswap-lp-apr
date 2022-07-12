@@ -1,11 +1,4 @@
-import { attachMutationObserver } from "./attachMutationObserver";
-import { setupDomNode } from "./setupDomNode";
-import { syncDom } from "./syncStateAndDom";
-import { updateDomNode } from "./updateDomNode";
-
-export const dom = {
-	setupDomNode,
-	updateDomNode,
-	sync: syncDom,
-	attachMutationObserver,
-};
+export { attachMutationObserver } from "./attachMutationObserver";
+export { setupHudNode as setupDomNode } from "./setupDomNode";
+export { syncDom } from "./syncStateAndDom";
+export { updateHudNode } from "./updateDomNode";

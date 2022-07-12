@@ -1,6 +1,5 @@
 import { main } from "..";
 import { State } from "../../State";
-import { charting } from "./charting";
 
 export function attachMutationObserver(state: State) {
 	if (state.observer) {
@@ -18,11 +17,11 @@ export function attachMutationObserver(state: State) {
 			programLoop(state);
 		}
 	}
-	state.observer = observer;
-	programLoop(state);
+	// state.observer = observer;
+	// programLoop(state);
+	return observer;
 }
 
 function programLoop(state: State) {
-	charting(state);
-	main(state);
+	main(state).catch((error) => console.error(error));
 }

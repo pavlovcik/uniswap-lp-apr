@@ -1,13 +1,13 @@
+import outliers from "outliers";
 import { State } from "../State";
 import { calculate } from "./calculate";
-import { dom } from "./dom";
-import { get } from "./get";
+import { syncDom } from "./dom";
+import { getDeposit, getPositionIdFromUrl, getPositionValue } from "./get";
 import { DepositAnalytic } from "./get/getDepositFromCache";
 import { store } from "./store";
-import outliers from "outliers";
 
 export async function main(state: State) {
-	const deposit = await get.deposit(state);
+	const deposit = await getDeposit(state);
 	// console.table(deposit?.analytics);
 	if (!deposit) {
 		return;
@@ -16,10 +16,10 @@ export async function main(state: State) {
 	const timings = calculate.timings(deposit);
 
 	state.position = {
-		id: get.positionIdFromUrl(), // -1 if not found,
-		value: get.positionValue(),
+		id: getPositionIdFromUrl(), // -1 if not found,
+		value: getPositionValue(),
 		time: timings,
-		yield: calculate.yield(timings.elapsed),
+		yield: calculate.yield(state, timings.elapsed),
 		precision: store.read("PRECISION"), // decimal precision of displayed values
 	};
 
@@ -44,6 +44,6 @@ export async function main(state: State) {
 
 	store.write("DEPOSITS", state.deposits);
 
-	dom.sync(state);
+	syncDom(state);
 	return state;
 }

@@ -1,7 +1,9 @@
 import { State } from "../../State";
-import { updateDomNode } from "./updateDomNode";
+import { updatePlotNode } from "./charting";
+import { updateHudNode } from "./updateDomNode";
 
 export function syncDom(state: State) {
-	updateDomNode(state);
+	updateHudNode(state);
+	updatePlotNode(state);
 	return state;
 }
