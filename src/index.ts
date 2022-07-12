@@ -6,9 +6,9 @@ import { main } from "./utils";
 if (window.state) {
 	// a previous instance exists, so remove it
 	console.warn(`previous instance detected!`);
-	window.state.observer?.disconnect();
-	window.state.dom.hud?.parentElement?.removeChild(window.state.dom.hud);
-	// delete window.state;
+	window.state.observer.disconnect();
+	window.state.dom.hud.parentElement?.removeChild(window.state.dom.hud);
+	window.state.dom.plot.parentElement?.removeChild(window.state.dom.plot);
 }
 
 main((window.state = new State()))
