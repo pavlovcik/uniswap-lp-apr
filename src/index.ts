@@ -5,6 +5,7 @@ import { main } from "./utils";
 import { dom } from "./utils/dom";
 
 if (window.state) {
+	console.warn(`previous instance detected!`);
 	// a previous instance exists, so remove it
 	window.state.observer?.disconnect();
 	window.state.domNode?.parentElement?.removeChild(window.state.domNode);
