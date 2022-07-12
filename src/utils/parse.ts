@@ -14,7 +14,7 @@ function parseDateFromUserInput(userInput: string) {
 }
 
 function parseDateFromTheGraph(timestamp: DepositTimeSubGraphResponse): number {
-	const depositTime = parseInt(timestamp?.data?.positions[0]?.transaction?.timestamp?.concat(`000`), 10);
+	const depositTime = Number(timestamp?.data?.positions[0]?.transaction?.timestamp?.concat(`000`));
 	if (!depositTime || isNaN(depositTime)) {
 		throw new TypeError("Could not parse timestamp from The Graph");
 	}
