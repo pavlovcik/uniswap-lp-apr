@@ -27,11 +27,11 @@
 		"npm-run-all": "^4.1.5",
 		"outliers": "^0.0.3",
 		"parcel": "^2.2.1",
-		"ts-node": "^10.4.0",
 		"typescript": "^4.5.5"
 	},
 	"devDependencies": {
 		"@tscc/rollup-plugin-tscc": "^0.8.0",
+		"@types/express": "^4.17.13",
 		"@typescript-eslint/eslint-plugin": "^5.10.2",
 		"@typescript-eslint/parser": "^5.10.2",
 		"eslint": "^8.8.0",
