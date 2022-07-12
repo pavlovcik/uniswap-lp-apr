@@ -21,8 +21,6 @@
 	"dependencies": {
 		"@metamask/providers": "^9.0.0",
 		"@observablehq/plot": "^0.5.2",
-		"@types/": "observablehq/plot",
-		"@types/outliers": "^0.0.0",
 		"google-closure-compiler": "^20220104.0.0",
 		"node-static": "^0.7.11",
 		"nodemon": "^2.0.15",
@@ -33,15 +31,13 @@
 		"typescript": "^4.5.5"
 	},
 	"devDependencies": {
-		"@ethersproject/providers": "^5.5.2",
-		"@graphprotocol/graph-cli": "^0.26.0",
+		"@tscc/rollup-plugin-tscc": "^0.8.0",
 		"@typescript-eslint/eslint-plugin": "^5.10.2",
 		"@typescript-eslint/parser": "^5.10.2",
 		"eslint": "^8.8.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"eslint-plugin-tsc": "^2.0.0",
-		"hardhat": "^2.8.3",
 		"prettier": "^2.5.1"
 	}
 }
