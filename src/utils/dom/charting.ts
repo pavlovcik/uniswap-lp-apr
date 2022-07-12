@@ -14,12 +14,25 @@ export function charting(state: State) {
 
 	const plotSvg = Plot.plot({
 		grid: true,
-		marks: [Plot.dot(analytics, dot), Plot.line(analytics, line)],
+		marks: [
+			Plot.dot(analytics, dot),
+			Plot.line(analytics, line),
+			// Plot.areaY(analytics, {
+			// 	x: "elapsed",
+			// 	y: "liquidity",
+			// 	// order: "liquidity",
+			// 	// fill: "brand",
+			// 	fillOpacity: 0.5,
+			// 	curve: "step",
+			// }),
+		],
 		y: {
 			percent: true,
+			axis: "right",
 		},
 		x: {
 			type: "time",
+			axis: "top",
 			transform: function bumpForwardSixHours(timestamp: string) {
 				// I have no idea why the times are behind by six hours,
 				// so here is a dirty fix

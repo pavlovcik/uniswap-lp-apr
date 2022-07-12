@@ -38,6 +38,7 @@ const CSS_TEXT = `
 #uniswap-apr.active {
     background: rgb(33, 36, 41);
     border-color: rgb(25, 27, 31);
+    color: #fff;
 }
 
 @keyframes rotate-360 {
@@ -56,22 +57,24 @@ const CSS_TEXT = `
 }
 
 svg[class^=plot] {
-    background: rgb(33, 36, 41);
-    border-color: rgb(25, 27, 31);
+    /* background: rgb(33, 36, 41); */
+    /* border-color: rgb(25, 27, 31); */
     color: white;
-    border-width: 2px;
-    border-style: solid;
+    /* border-width: 2px; */
+    /* border-style: solid; */
     font-weight: 500;
-    background-color: rgb(25, 27, 31);
+    /* background-color: rgb(25, 27, 31); */
     padding: 1rem;
     border-radius: 16px;
     width: calc( 100% - 32px);
     max-width: 960px;
     display: inline-block;
+    background: transparent;
 }
 
 #uniswap-apr-plotter {
     text-align: center;
+    padding: 0 0 64px;
 }
 
 `;

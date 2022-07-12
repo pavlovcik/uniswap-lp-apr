@@ -36,7 +36,7 @@ export async function main(state: State) {
 
 	// filter by liquidity amount
 	state.deposits[state.position.id].analytics = [
-		...new Map(state.deposits[state.position.id].analytics.map((v) => [v.liquidity, v])).values(),
+		...new Map(state.deposits[state.position.id].analytics?.map((v) => [v.liquidity, v])).values(),
 	];
 
 	// remove APR outliers
