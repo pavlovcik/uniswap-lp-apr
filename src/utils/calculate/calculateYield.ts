@@ -1,9 +1,14 @@
 import { MS_IN_YEAR } from ".";
-import { PositionYield } from "../../State";
-import { get } from "../get";
+import { PositionYield, State } from "../../State";
+import { getPositionValue } from "../get";
 
-export function calculateYield(timeElapsed: number): PositionYield {
-	const { fees, liquidity } = get.positionValue();
+export function calculateYield(state: State, timeElapsed: number): PositionYield {
+	// let fees, liquidity;
+	// try {
+	const { fees, liquidity } = getPositionValue();
+	// } catch (error) {
+
+	// }
 	const percentYield = fees / liquidity;
 	const projectedAPR = percentYield / (timeElapsed / MS_IN_YEAR);
 

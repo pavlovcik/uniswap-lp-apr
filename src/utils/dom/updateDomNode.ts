@@ -6,8 +6,8 @@ const hoursInYear = 8760;
 const minutesInYear = 525600;
 const secondsInYear = 31557600;
 
-export function updateDomNode(state: State) {
-	const node = state.domNode;
+export function updateHudNode(state: State) {
+	const node = state.dom.hud;
 	const apr = state.position.yield.apr;
 	const liquidity = state.position.value.liquidity;
 

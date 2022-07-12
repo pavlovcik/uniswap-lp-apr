@@ -1,6 +1,6 @@
 import { PositionValue } from "../../State";
 
-export function getPositionValue(): PositionValue {
+export function getLiquidityAndFeesFromDom(): PositionValue {
 	const root = document.getElementById(`root`);
 	if (!root) {
 		throw new Error(`No root element found`);
@@ -10,8 +10,16 @@ export function getPositionValue(): PositionValue {
 		console.warn("No relevant data on DOM found");
 		return { liquidity: 0, fees: 0 };
 	}
+
 	const liquidity = parser(relevantData, 0);
+	if (!liquidity) {
+		throw new Error("No liquidity found, can not calculate performance!");
+	}
+
 	const fees = parser(relevantData, 1);
+	if (!fees) {
+		throw new Error("No fees generated found, can not calculate performance!");
+	}
 
 	return { liquidity, fees };
 

@@ -1,4 +1,3 @@
-// import { get } from ".";
 import {
 	Deposit,
 	getDepositFromCache,
@@ -54,8 +53,6 @@ async function getDepositTime(state: State, positionId: number): Promise<void> {
 	} catch (error) {
 		// Fallback to user input
 		console.error(error);
-		// FIXME: make a nicer storage schema
-		state.depositPrompted = true;
 
 		const userInputTransactionHash = prompt("Paste deposit transaction hash here");
 		if (userInputTransactionHash) {

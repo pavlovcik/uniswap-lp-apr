@@ -5,7 +5,15 @@ export class Deposit {
 	time: number;
 	oracle: DepositOracle;
 	analytics: DepositAnalytic[];
-	constructor({ time, oracle, analytics }) {
+	constructor({
+		time,
+		oracle,
+		analytics,
+	}: {
+		time: Deposit["time"];
+		oracle: Deposit["oracle"];
+		analytics: Deposit["analytics"];
+	}) {
 		this.time = time;
 		this.oracle = oracle;
 		this.analytics = analytics;

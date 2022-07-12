@@ -32,6 +32,7 @@ javascript: (() => {
 	document.body.appendChild(script);
 })();
 ```
+
 That's it!
 
 ### For Developers

@@ -1,16 +1,12 @@
 {
-    "ignore": [
-        "dist/"
-    ],
-    "watch": [
-        "src/**/*"
-    ],
-    "events": {
-        "config": "exit",
-        "exit": "",
-        "restart": "clear && printf '\\033[3J'",
-        "start": "clear && printf '\\033[3J'"
-    },
-    "exec": "yarn _build:main",
-    "ext": "js,json,ts"
+	"ignore": ["dist/"],
+	"watch": ["src/**/*"],
+	"events": {
+		"config": "exit",
+		"exit": "",
+		"restart": "clear && printf '\\033[3J'",
+		"start": "clear && printf '\\033[3J'"
+	},
+	"exec": "yarn _build:main",
+	"ext": "js,json,ts"
 }
