@@ -48,7 +48,7 @@
 	list-style: none;
 	margin: 0;
 }
-#uniswap-apr-hud-plotter svg[class^="plot"] {
+#uniswap-apr-plotter svg[class^="plot"] {
 	color: white;
 	font-weight: 500;
 	padding: 1rem;
@@ -58,7 +58,7 @@
 	display: inline-block;
 	background: transparent;
 }
-#uniswap-apr-hud-plotter {
+#uniswap-apr-plotter {
 	text-align: center;
 	padding: 0 0 64px;
 	background: rgb(33, 36, 41);
