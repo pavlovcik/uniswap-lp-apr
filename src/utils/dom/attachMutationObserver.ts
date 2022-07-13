@@ -1,5 +1,6 @@
 import { main } from "..";
 import { State } from "../../State";
+import { catchAndRenderError } from "../../index";
 
 export function attachMutationObserver(state: State) {
 	if (state.observer) {
@@ -21,5 +22,5 @@ export function attachMutationObserver(state: State) {
 }
 
 function programLoop(state: State) {
-	main(state).catch((error) => console.error(error));
+	main(state).catch(catchAndRenderError);
 }
