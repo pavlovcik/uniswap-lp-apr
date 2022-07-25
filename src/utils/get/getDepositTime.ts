@@ -15,11 +15,10 @@ import { store } from "../store";
  * If reading from the chain fails, prompt the user to enter the deposit time
  */
 
-export async function getDeposit(state: State): Promise<Deposit | null> {
+export async function getDeposit(state: State): Promise<Deposit> {
 	const positionId = getPositionIdFromUrl();
 	if (positionId === -1) {
-		console.error("No position id found");
-		return null;
+		throw new Error("No position id found");
 	}
 
 	let deposit = getDepositFromCache(state, positionId);

@@ -8,10 +8,6 @@ import { store } from "./store";
 
 export async function main(state: State) {
 	const deposit = await getDeposit(state);
-	// console.table(deposit?.analytics);
-	if (!deposit) {
-		return;
-	}
 
 	const timings = calculate.timings(deposit);
 

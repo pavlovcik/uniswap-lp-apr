@@ -16,15 +16,17 @@ main((window.state = new State()))
 		console.log(`Uniswap APR Bookmarklet loaded successfully. Version ${version}.`);
 		console.log(`Access bookmarklet state via window.state.`);
 	})
-	.catch((error) => {
-		console.error(error);
-		window.state.dom.hud.innerText = (error as Error).toString();
-		window.state.dom.hud.className = "active";
-	});
+	.catch(catchAndRenderError);
 
 declare global {
 	interface Window {
 		state: State;
 		ethereum: MetaMaskInpageProvider;
 	}
+}
+
+export function catchAndRenderError(error: Error) {
+	console.error(error);
+	window.state.dom.hud.innerText = (error as Error).toString();
+	window.state.dom.hud.className = "active";
 }
