@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-loss-of-precision */
 import { DepositAnalytic } from "../get/getDepositFromCache";
-import { PositionValue, PositionTiming } from "../../State";
 export default function revertPositionToDeposit(revertPosition: RevertPosition) {
 	const deposit: DepositAnalytic = {
 		timestamp: Date.now(),
