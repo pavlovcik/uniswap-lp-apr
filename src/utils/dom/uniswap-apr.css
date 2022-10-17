@@ -8,21 +8,19 @@
 }
 #uniswap-apr-hud {
 	position: fixed;
-	top: 0;
+	top: 72px;
 	z-index: 2;
 	padding: 16px;
 	border-radius: 16px;
 	margin: 16px 10px;
-	border-width: 2px;
-	border-style: solid;
-	border-color: transparent;
 	font-weight: 500;
+	backdrop-filter: blur(24px);
 }
 #uniswap-apr-hud::before {
 	content: "";
 	position: absolute;
 	top: -4px;
-	left: -4px;
+	left: 12px;
 	width: 100%;
 	height: 100%;
 	border-radius: 22px;
@@ -39,9 +37,6 @@
 	transition: none;
 }
 #uniswap-apr-hud.active {
-	background: rgb(33, 36, 41);
-	border-color: rgb(25, 27, 31);
-	color: #fff;
 }
 #uniswap-apr-hud ul {
 	padding: 0;
